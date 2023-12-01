@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 public class Town extends ICMonArea {
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(0, 0);
+        return new DiscreteCoordinates(5, 5);
     }
 
     @Override
