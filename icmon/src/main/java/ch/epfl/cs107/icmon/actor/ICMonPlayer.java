@@ -1,5 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -8,7 +10,10 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-public class ICMonPlayer extends ICMonActor {
+import java.util.Collections;
+import java.util.List;
+
+public class ICMonPlayer extends ICMonActor implements Interactor {
     public OrientedAnimation currentAnimation;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
 
@@ -47,6 +52,26 @@ public class ICMonPlayer extends ICMonActor {
               }
             }
         }
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getFieldOfViewCells() {
+        return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+    }
+
+    @Override
+    public boolean wantsCellInteraction() {
+        return true;
+    }
+
+    @Override
+    public boolean wantsViewInteraction() {
+        return getOwnerArea().getKeyboard().get(Keyboard.F).isPressed();
+    }
+
+    @Override
+    public void interactWith(Interactable other, boolean isCellInteraction) {
+
     }
 
     @Override
