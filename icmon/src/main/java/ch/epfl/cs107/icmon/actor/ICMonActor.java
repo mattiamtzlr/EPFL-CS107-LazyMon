@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -54,7 +55,7 @@ public class ICMonActor extends MovableAreaEntity {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-       //TODO: Implement this: acceptInteraction
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.area;
 
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -102,6 +103,7 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+            ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
         }
     }
 }

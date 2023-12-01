@@ -1,5 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -71,7 +73,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
-
+        // TODO I dont know if page 11 also referes to this method ?? Did not implement it even tho I might
+        // TODO should have done so :)
     }
 
     @Override
@@ -84,5 +87,16 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         currentAnimation.draw(canvas);
     }
 
+    private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
+        @Override
+        public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
+            if (isCellInteraction) {
+                switch (ICMonBehavior.ICMonCellType.toType(cell.hashCode())) {
+                    case GRASS -> System.out.println("how do I go on from here?");
+                    case WATER -> System.out.println("I do not know how to access the \"AllowedWalkingType\"");
+                }
+            }
+        }
+    }
 
 }
