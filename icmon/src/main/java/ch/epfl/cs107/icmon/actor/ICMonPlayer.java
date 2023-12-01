@@ -10,12 +10,12 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 public class ICMonPlayer extends ICMonActor {
     public OrientedAnimation currentAnimation;
-    private final static int ANIMATION_DURATION = 8;
+    private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
 
     public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates) {
         super(owner, orientation, coordinates);
-        OrientedAnimation animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION/2, orientation, this);
-        OrientedAnimation animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, orientation, this);
+        OrientedAnimation animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, orientation, this);
+        OrientedAnimation animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, orientation, this);
         // TODO This is not the way we actually want to handle animations, need to actually implement
         this.currentAnimation = animationLand;
     }
@@ -25,7 +25,9 @@ public class ICMonPlayer extends ICMonActor {
         moveIfPressed(Orientation.UP, new Button[] {keyboard.get(Keyboard.UP), keyboard.get(Keyboard.W)});
         moveIfPressed(Orientation.RIGHT, new Button[] {keyboard.get(Keyboard.RIGHT), keyboard.get(Keyboard.D)});
         moveIfPressed(Orientation.DOWN, new Button[] {keyboard.get(Keyboard.DOWN), keyboard.get(Keyboard.S)});
-        if (isDisplacementOccurs()) currentAnimation.update(deltaTime);
+
+        if (isDisplacementOccurs())
+            currentAnimation.update(deltaTime);
         else currentAnimation.reset();
         super.update(deltaTime);
     }
