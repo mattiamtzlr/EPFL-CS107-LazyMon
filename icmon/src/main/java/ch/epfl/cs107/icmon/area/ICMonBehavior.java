@@ -69,7 +69,7 @@ public class ICMonBehavior extends AreaBehavior {
          *
          * @param x    (int): x coordinate of the cell
          * @param y    (int): y coordinate of the cell
-         * @param type (EnigmeCellType), not null
+         * @param type (ICCellType), not null
          */
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
@@ -83,7 +83,11 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-            return !entity.takeCellSpace();
+            if (!entity.takeCellSpace()) return true;
+            for (Interactable entityInCell : entities) {
+                if (entityInCell.takeCellSpace()) return false;
+            }
+            return true;
         }
 
         @Override

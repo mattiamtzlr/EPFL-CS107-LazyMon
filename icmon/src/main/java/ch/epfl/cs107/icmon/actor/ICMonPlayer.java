@@ -49,7 +49,7 @@ public class ICMonPlayer extends ICMonActor {
 
     @Override
     public boolean takeCellSpace() {
-        return false;
+        return true;
     }
 
     @Override

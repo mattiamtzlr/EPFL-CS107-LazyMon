@@ -27,8 +27,9 @@ public class ICMon extends AreaGame {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        //Keyboard keyboard = getWindow().getKeyboard();
-        //if (keyboard.get(Keyboard.R).isPressed()) this.begin(getWindow(), getFileSystem());
+        Keyboard keyboard = getWindow().getKeyboard();
+        if (keyboard.get(Keyboard.R).isPressed())
+            this.begin(getWindow(), getFileSystem());
     }
 
     /**
@@ -51,7 +52,6 @@ public class ICMon extends AreaGame {
      */
     @Override
     public void end() {
-
     }
 
 
@@ -70,7 +70,7 @@ public class ICMon extends AreaGame {
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        player = new ICMonPlayer(getCurrentArea(), Orientation.DOWN, new DiscreteCoordinates(5, 5));
+        player = new ICMonPlayer(getCurrentArea(), Orientation.DOWN, coords);
         player.enterArea(area, coords);
     }
     @Override
