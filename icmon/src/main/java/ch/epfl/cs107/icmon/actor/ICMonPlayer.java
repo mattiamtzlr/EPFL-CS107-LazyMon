@@ -94,8 +94,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
-        // TODO I dont know if page 11 also referes to this method ?? Did not implement it even tho I might
-        // TODO should have done so :)
+        // TODO I dont know if page 11 also referes to this method ?? Did not implement it even tho I might should have done so :)
         // Mattia: I think this should work:
         other.acceptInteraction(handler, isCellInteraction);
     }
@@ -119,18 +118,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     case SURF -> setCurrentAnimation(animationWater);
                 }
 
-                /*
-                switch (ICMonBehavior.ICMonCellType.toType(cell.hashCode())) {
-                    case GRASS -> System.out.println("how do I go on from here?");
-                    case WATER -> System.out.println("I do not know how to access the \"AllowedWalkingType\"");
-                }
-                */
+
             }
         }
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            System.out.println("balls");
+            if(!isCellInteraction){
+                ball.collect();
+            }
         }
     }
 
