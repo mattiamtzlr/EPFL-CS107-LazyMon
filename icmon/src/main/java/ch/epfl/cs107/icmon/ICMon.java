@@ -54,8 +54,6 @@ public class ICMon extends AreaGame {
     public void end() {
     }
 
-
-
     /**
      * ???
      */
