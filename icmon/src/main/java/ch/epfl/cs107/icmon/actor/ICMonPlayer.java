@@ -1,10 +1,12 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
+import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -16,15 +18,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
-    public OrientedAnimation currentAnimation;
+    private OrientedAnimation currentAnimation;
+    private OrientedAnimation animationLand;
+    private OrientedAnimation animationWater;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
+    private ICMonPlayerInteractionHandler handler;
 
     public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates) {
         super(owner, orientation, coordinates);
-        OrientedAnimation animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, orientation, this);
-        OrientedAnimation animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, orientation, this);
-        // TODO This is not the way we actually want to handle animations, need to actually implement
-        this.currentAnimation = animationLand;
+        this.animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, orientation, this);
+        this.animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, orientation, this);
+
+        this.handler = new ICMonPlayerInteractionHandler();
+
+        setCurrentAnimation(animationLand);
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -42,7 +49,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      * Orientate and Move this player in the given orientation if the given button is down
      *
      * @param orientation (Orientation): given orientation, not null
-     * @param b           (Button): button corresponding to the given orientation, not null
+     * @param buttons (Button): list of buttons corresponding to the given orientation, not null
      */
     private void moveIfPressed(Orientation orientation, Button[] buttons) {
         for (Button b : buttons) {
@@ -56,9 +63,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
     }
 
+    public void setCurrentAnimation(OrientedAnimation currentAnimation) {
+        currentAnimation.orientate(this.getOrientation());
+        this.currentAnimation = currentAnimation;
+    }
+
+    public OrientedAnimation getAnimationLand() {
+        return animationLand;
+    }
+
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+    }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     @Override
@@ -75,6 +96,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public void interactWith(Interactable other, boolean isCellInteraction) {
         // TODO I dont know if page 11 also referes to this method ?? Did not implement it even tho I might
         // TODO should have done so :)
+        // Mattia: I think this should work:
+        other.acceptInteraction(handler, isCellInteraction);
     }
 
     @Override
@@ -91,11 +114,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
+                switch (cell.getType().getWalkingType()) {
+                    default -> setCurrentAnimation(animationLand);
+                    case SURF -> setCurrentAnimation(animationWater);
+                }
+
+                /*
                 switch (ICMonBehavior.ICMonCellType.toType(cell.hashCode())) {
                     case GRASS -> System.out.println("how do I go on from here?");
                     case WATER -> System.out.println("I do not know how to access the \"AllowedWalkingType\"");
                 }
+                */
             }
+        }
+
+        @Override
+        public void interactWith(ICBall ball, boolean isCellInteraction) {
+            System.out.println("balls");
         }
     }
 

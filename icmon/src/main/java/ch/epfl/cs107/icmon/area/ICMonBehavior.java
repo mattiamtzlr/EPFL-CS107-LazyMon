@@ -51,12 +51,16 @@ public class ICMonBehavior extends AreaBehavior {
             this.walkingType = walkingType;
         }
 
+        public AllowedWalkingType getWalkingType() {
+            return walkingType;
+        }
+
         public static ICMonCellType toType(int type) {
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
                     return ict;
             }
-            // When you add a new color, you can print the int value here before assign it to a type
+            // When you add a new type, you can print the int value here before assign it to a type
             System.out.println(type);
             return NULL;
         }
@@ -66,7 +70,7 @@ public class ICMonBehavior extends AreaBehavior {
         private final ICMonCellType type;
 
         /**
-         * Default Tuto2Cell Constructor
+         * Default ICMonCell Constructor
          *
          * @param x    (int): x coordinate of the cell
          * @param y    (int): y coordinate of the cell
@@ -75,6 +79,10 @@ public class ICMonBehavior extends AreaBehavior {
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
             this.type = type;
+        }
+
+        public ICMonCellType getType() {
+            return type;
         }
 
         @Override
