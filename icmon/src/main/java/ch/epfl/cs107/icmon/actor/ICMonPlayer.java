@@ -68,10 +68,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.currentAnimation = currentAnimation;
     }
 
-    public OrientedAnimation getAnimationLand() {
-        return animationLand;
-    }
-
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
@@ -94,8 +90,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
-        // TODO I dont know if page 11 also referes to this method ?? Did not implement it even tho I might should have done so :)
-        // Mattia: I think this should work:
         other.acceptInteraction(handler, isCellInteraction);
     }
 
@@ -117,8 +111,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     default -> setCurrentAnimation(animationLand);
                     case SURF -> setCurrentAnimation(animationWater);
                 }
-
-
             }
         }
 
