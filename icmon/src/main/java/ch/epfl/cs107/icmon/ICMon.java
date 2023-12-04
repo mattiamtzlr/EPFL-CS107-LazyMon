@@ -30,6 +30,9 @@ public class ICMon extends AreaGame {
     public void update(float deltaTime) {
         super.update(deltaTime);
         Keyboard keyboard = getWindow().getKeyboard();
+
+        // TODO: (idea) make a method which takes an action and a key and then perform that action
+        //       when pressing that key.
         if (keyboard.get(Keyboard.R).isPressed())
             this.begin(getWindow(), getFileSystem());
     }
