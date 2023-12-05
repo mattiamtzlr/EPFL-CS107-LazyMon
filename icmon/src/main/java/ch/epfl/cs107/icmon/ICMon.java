@@ -6,13 +6,13 @@ import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
-import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.engine.Game;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -25,8 +25,11 @@ public class ICMon extends AreaGame {
     public static final float CAMERA_SCALE_FACTOR = 15.f;
     private ICMonPlayer player;
     private ICMonGameState gameState;
-    private ArrayList<ICMonEvent> events;
-    private String[] areas = {"town"};
+    private ICMonEventManager eventManager;
+    private ArrayList<ICMonEvent> activeEvents;
+    private ArrayList<ICMonEvent> newEvents;
+    private ArrayList<ICMonEvent> completedEvents;
+    private final String[] areas = {"town"};
 
     /**
      * Helper method to list all the areas which need to be created.
@@ -45,9 +48,15 @@ public class ICMon extends AreaGame {
         super.update(deltaTime);
         Keyboard keyboard = getWindow().getKeyboard();
 
-        for (ICMonEvent event : events) {
+        activeEvents.addAll(newEvents);
+        newEvents.clear();
+
+        activeEvents.removeAll(completedEvents);
+        completedEvents.clear();
+
+        for (ICMonEvent event : activeEvents)
             event.update(deltaTime);
-        }
+
 
         // TODO: (idea) make a method which takes an action and a key and then perform that action
         //       when pressing that key.
@@ -64,20 +73,23 @@ public class ICMon extends AreaGame {
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
-            this.events = new ArrayList<>();
+            this.activeEvents = new ArrayList<>();
+            this.newEvents = new ArrayList<>();
+            this.completedEvents = new ArrayList<>();
+
             this.gameState = new ICMonGameState();
 
             createAreas();
-
             initArea(areas[0]);
 
             // initialise events TODO: do this better
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6, 6), "items/icball");
-            CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball);
+            // maybe move this to the events themselves that would be smart
+            // because we are defining events ,mmmmmmmmmm :)
+            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(13, 12), "items/icball");
+            CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
             collectItemEvent.onComplete(new LogAction("Ballin"));
-            collectItemEvent.start();
-            events.add(collectItemEvent);
+            collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(player, eventManager)));
 
             return true;
         }
@@ -120,9 +132,20 @@ public class ICMon extends AreaGame {
         private ICMonGameState() {}
 
         public void acceptInteraction(Interactable interactable, boolean isCellInteraction) {
-            for (ICMonEvent event : ICMon.this.events) {
+            for (ICMonEvent event : ICMon.this.activeEvents) {
                 interactable.acceptInteraction((AreaInteractionVisitor) event, isCellInteraction);
             }
         }
+    }
+    public class ICMonEventManager {
+        private ICMonEventManager() {}
+
+        public void registerEvent(ICMonEvent event){
+            newEvents.add(event);
+        }
+        public void unRegisterEvent(ICMonEvent event){
+            completedEvents.add(event);
+        }
+
     }
 }
