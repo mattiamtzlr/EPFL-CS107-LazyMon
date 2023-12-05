@@ -86,7 +86,7 @@ public class ICMon extends AreaGame {
             // initialise events TODO: do this better
             // maybe move this to the events themselves that would be smart
             // because we are defining events ,mmmmmmmmmm :)
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(7, 7), "items/icball");
+            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(15, 8), "items/icball");
             CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
             collectItemEvent.onComplete(new LogAction("Ballin"));

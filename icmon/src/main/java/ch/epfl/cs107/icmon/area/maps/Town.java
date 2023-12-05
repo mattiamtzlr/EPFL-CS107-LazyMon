@@ -14,7 +14,7 @@ import ch.epfl.cs107.play.math.Orientation;
 public class Town extends ICMonArea {
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(5, 5);
+        return new DiscreteCoordinates(20, 7);
     }
 
     @Override
