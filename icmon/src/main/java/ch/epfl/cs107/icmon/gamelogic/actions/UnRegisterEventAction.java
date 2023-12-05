@@ -13,7 +13,6 @@ public class UnRegisterEventAction implements Action{
 
     @Override
     public void perform() {
-        if (event.isCompleted())
-            eventManager.unRegisterEvent(event);
+        eventManager.unRegisterEvent(event);
     }
 }

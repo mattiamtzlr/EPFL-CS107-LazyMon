@@ -7,6 +7,7 @@ import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
@@ -57,7 +58,6 @@ public class ICMon extends AreaGame {
         for (ICMonEvent event : activeEvents)
             event.update(deltaTime);
 
-
         // TODO: (idea) make a method which takes an action and a key and then perform that action
         //       when pressing that key.
         if (keyboard.get(Keyboard.R).isPressed())
@@ -78,6 +78,7 @@ public class ICMon extends AreaGame {
             this.completedEvents = new ArrayList<>();
 
             this.gameState = new ICMonGameState();
+            this.eventManager = new ICMonEventManager();
 
             createAreas();
             initArea(areas[0]);
@@ -85,12 +86,12 @@ public class ICMon extends AreaGame {
             // initialise events TODO: do this better
             // maybe move this to the events themselves that would be smart
             // because we are defining events ,mmmmmmmmmm :)
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(13, 12), "items/icball");
+            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(7, 7), "items/icball");
             CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
             collectItemEvent.onComplete(new LogAction("Ballin"));
             collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(player, eventManager)));
-
+            collectItemEvent.start();
             return true;
         }
         return false;
@@ -138,7 +139,9 @@ public class ICMon extends AreaGame {
         }
     }
     public class ICMonEventManager {
-        private ICMonEventManager() {}
+
+        public ICMonEventManager() {
+        }
 
         public void registerEvent(ICMonEvent event){
             newEvents.add(event);

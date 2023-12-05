@@ -15,13 +15,14 @@ public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisi
         super(player);
         this.item = item;
         this.onStart(new RegisterEventAction(this, eventManager));
-        this.onComplete(new UnRegisterEventAction(this, eventManager));
+        this.onComplete(new UnRegisterEventAction(this, eventManager));//
     }
 
 
     @Override
     public void update(float deltaTime) {
-        if (item.isCollected())
+        if (item.isCollected()) {
             this.complete();
+        }
     }
 }

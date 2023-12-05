@@ -90,6 +90,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public boolean wantsViewInteraction() {
         return getOwnerArea().getKeyboard().get(Keyboard.F).isPressed();
+
     }
 
     @Override
@@ -123,6 +124,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if(!isCellInteraction){
                 ball.collect();
+
             }
         }
     }
