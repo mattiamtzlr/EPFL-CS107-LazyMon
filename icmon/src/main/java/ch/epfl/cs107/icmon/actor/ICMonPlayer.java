@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -119,6 +120,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if(!isCellInteraction){
                 ball.collect();
             }
+        }
+
+        @Override
+        public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
+            System.out.println("greetings fellow traveler");
         }
     }
 

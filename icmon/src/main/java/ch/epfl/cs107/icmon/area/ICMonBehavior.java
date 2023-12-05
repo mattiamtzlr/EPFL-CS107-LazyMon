@@ -93,11 +93,10 @@ public class ICMonBehavior extends AreaBehavior {
         @Override
         protected boolean canEnter(Interactable entity) {
             if (this.getType().getWalkingType() == AllowedWalkingType.NONE) return false;
-            if (!entity.takeCellSpace()) return true;
-
-            for (Interactable entityInCell : entities) {
+            if (!entity.takeCellSpace())
+                return true;
+            for (Interactable entityInCell : entities)
                 if (entityInCell.takeCellSpace()) return false;
-            }
             return true;
         }
 
