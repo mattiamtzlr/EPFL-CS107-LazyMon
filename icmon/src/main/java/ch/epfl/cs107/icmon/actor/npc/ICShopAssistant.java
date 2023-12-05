@@ -6,7 +6,7 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class ICShopAssistant extends NPCActor{
+public class ICShopAssistant extends NPCActor {
 
     public ICShopAssistant(Area owner, Orientation orientation, DiscreteCoordinates position) {
         super(owner, orientation, position, "actors/assistant");

@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
@@ -24,13 +25,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private OrientedAnimation animationWater;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
     private ICMonPlayerInteractionHandler handler;
+    private ICMon.ICMonGameState state;
 
-    public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates) {
+    public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, ICMon.ICMonGameState state) {
         super(owner, orientation, coordinates);
         this.animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, orientation, this);
         this.animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, orientation, this);
 
         this.handler = new ICMonPlayerInteractionHandler();
+        this.state = state;
 
         setCurrentAnimation(animationLand);
     }
@@ -92,6 +95,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
+        state.acceptInteraction(other, isCellInteraction);
     }
 
     @Override
@@ -120,11 +124,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if(!isCellInteraction){
                 ball.collect();
             }
-        }
-
-        @Override
-        public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-            System.out.println("greetings fellow traveler");
         }
     }
 
