@@ -8,6 +8,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisitor {
     private ICMonItem item;
@@ -20,6 +21,10 @@ public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisi
         this.onComplete(new UnRegisterEventAction(this, eventManager));//
     }
 
+    @Override
+    public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
+        getPlayer().openDialog(new Dialog("collect_item_event_interaction_with_icshopassistant"));
+    }
 
     @Override
     public void update(float deltaTime) {

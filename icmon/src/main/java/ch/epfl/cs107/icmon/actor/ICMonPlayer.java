@@ -9,6 +9,7 @@ import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -23,6 +24,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private OrientedAnimation currentAnimation;
     private OrientedAnimation animationLand;
     private OrientedAnimation animationWater;
+    private Dialog dialog;
+    private boolean inDialog;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
     private ICMonPlayerInteractionHandler handler;
     private ICMon.ICMonGameState state;
@@ -39,15 +42,22 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        moveIfPressed(Orientation.LEFT, new Button[] {keyboard.get(Keyboard.LEFT), keyboard.get(Keyboard.A)});
-        moveIfPressed(Orientation.UP, new Button[] {keyboard.get(Keyboard.UP), keyboard.get(Keyboard.W)});
-        moveIfPressed(Orientation.RIGHT, new Button[] {keyboard.get(Keyboard.RIGHT), keyboard.get(Keyboard.D)});
-        moveIfPressed(Orientation.DOWN, new Button[] {keyboard.get(Keyboard.DOWN), keyboard.get(Keyboard.S)});
+        if (inDialog) {
+            if (keyboard.get(Keyboard.SPACE).isPressed())
+                dialog.update(deltaTime);
+            setDialogState(!dialog.isCompleted());
+        }
+        else {
+            moveIfPressed(Orientation.LEFT, new Button[]{keyboard.get(Keyboard.LEFT), keyboard.get(Keyboard.A)});
+            moveIfPressed(Orientation.UP, new Button[]{keyboard.get(Keyboard.UP), keyboard.get(Keyboard.W)});
+            moveIfPressed(Orientation.RIGHT, new Button[]{keyboard.get(Keyboard.RIGHT), keyboard.get(Keyboard.D)});
+            moveIfPressed(Orientation.DOWN, new Button[]{keyboard.get(Keyboard.DOWN), keyboard.get(Keyboard.S)});
 
-        if (isDisplacementOccurs())
-            currentAnimation.update(deltaTime);
-        else currentAnimation.reset();
-        super.update(deltaTime);
+            if (isDisplacementOccurs())
+                currentAnimation.update(deltaTime);
+            else currentAnimation.reset();
+            super.update(deltaTime);
+        }
     }
     /**
      * Orientate and Move this player in the given orientation if the given button is down
@@ -65,6 +75,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
               }
             }
         }
+    }
+
+    public void openDialog(Dialog dialog) {
+        this.dialog = dialog;
+        setDialogState(true);
+    }
+
+    public void setDialogState(boolean dialogState) {
+        this.inDialog = dialogState;
     }
 
     public void setCurrentAnimation(OrientedAnimation currentAnimation) {
@@ -89,8 +108,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public boolean wantsViewInteraction() {
-        return getOwnerArea().getKeyboard().get(Keyboard.F).isPressed();
-
+        return !inDialog && getOwnerArea().getKeyboard().get(Keyboard.F).isPressed();
     }
 
     @Override
@@ -107,6 +125,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void draw(Canvas canvas) {
         currentAnimation.draw(canvas);
+        if (inDialog)
+            dialog.draw(canvas);
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {

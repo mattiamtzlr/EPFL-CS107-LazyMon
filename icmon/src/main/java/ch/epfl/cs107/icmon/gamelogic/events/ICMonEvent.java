@@ -22,6 +22,10 @@ public class ICMonEvent implements Updatable {
         this.player = player;
     }
 
+    public ICMonPlayer getPlayer() {
+        return player;
+    }
+
     public final void start(){
         if (!started) {
             performActions(startActions);
