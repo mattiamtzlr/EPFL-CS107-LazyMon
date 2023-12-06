@@ -28,6 +28,5 @@ public class EndOfGameEvent extends ICMonEvent implements ICMonInteractionVisito
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
         System.out.println("you did it :)");
-        this.complete();
     }
 }
