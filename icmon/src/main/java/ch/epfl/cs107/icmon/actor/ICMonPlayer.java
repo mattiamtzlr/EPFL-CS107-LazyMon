@@ -151,10 +151,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if (isCellInteraction) {
-                // TODO: Somehow get the area from its title :/
+                // TODO: As soon as the messaging system between the player and the game is implemented,
+                //       this needs to use it.
 
-                /*leaveArea();
-                enterArea(door.getDestinationArea(), door.getDestinationCoords());*/
                 System.out.println("*smack* *walks into door*");
             }
         }
