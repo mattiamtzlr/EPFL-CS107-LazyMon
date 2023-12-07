@@ -30,6 +30,7 @@ public class ICMonActor extends MovableAreaEntity {
         setCurrentPosition(position.toVector());
         resetMotion();
     }
+
     public void leaveArea() {
         getOwnerArea().unregisterActor(this);
     }

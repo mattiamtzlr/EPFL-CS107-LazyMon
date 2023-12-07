@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -144,7 +145,17 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if(!isCellInteraction){
                 ball.collect();
+            }
+        }
 
+        @Override
+        public void interactWith(Door door, boolean isCellInteraction) {
+            if (isCellInteraction) {
+                // TODO: Somehow get the area from its title :/
+
+                /*leaveArea();
+                enterArea(door.getDestinationArea(), door.getDestinationCoords());*/
+                System.out.println("*smack* *walks into door*");
             }
         }
     }
