@@ -1,5 +1,7 @@
 package ch.epfl.cs107.icmon;
 
+import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
@@ -7,11 +9,18 @@ import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
-import ch.epfl.cs107.icmon.gamelogic.events.*;
+import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.gamelogic.messages.GamePlayMessage;
+import ch.epfl.cs107.icmon.gamelogic.messages.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -22,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ICMon extends AreaGame {
-    public static final float CAMERA_SCALE_FACTOR = 13.f;
+    public static final float CAMERA_SCALE_FACTOR = 15.f;
     private ICMonPlayer player;
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
@@ -154,6 +163,22 @@ public class ICMon extends AreaGame {
             player.leaveArea();
             setCurrentArea(targetAreaKey, false);
             player.enterArea(areas.get(targetAreaKey), targetCoords);
+        }
+
+        public void startFightEvent(ICMonFight combat, ICMonFightableActor foe){
+             PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat);
+             fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
+             eventManager.registerEvent(fightEvent);
+        }
+
+        public void suspendOtherEvents(ICMonEvent event, boolean hasPauseMenu){
+             if (hasPauseMenu) {
+                 event.onStart(new ConnectPauseMenuAction(gameState, ((PokemonFightEvent)event).getPauseMenu()));
+             }
+        }
+
+        public void newPauseMenu(PauseMenu menu){
+             setPauseMenu(menu);
         }
 
 
