@@ -3,6 +3,8 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.messages.PassDoorMessage;
@@ -19,6 +21,7 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
     private ICMonPlayerInteractionHandler handler;
     private ICMon.ICMonGameState state;
+    private ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
 
     public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, ICMon.ICMonGameState state) {
         super(owner, orientation, coordinates);
@@ -39,6 +43,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
+        pokemonCollection.add(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 
         setCurrentAnimation(animationLand);
     }
@@ -154,6 +159,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if (isCellInteraction) {
                 PassDoorMessage message = new PassDoorMessage(door);
                 state.send(message);
+            }
+        }
+
+        @Override
+        public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
+            if (isCellInteraction) {
+                pokemonCollection.get(0).fight(pokemon, state);
             }
         }
     }
