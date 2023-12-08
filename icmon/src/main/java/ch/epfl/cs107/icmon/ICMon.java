@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
@@ -42,13 +43,14 @@ public class ICMon extends AreaGame {
      * Helper method to list all the areas which need to be created.
      */
     private void createAreas() {
-        ICMonArea town = new Town();
-        this.areas.put(town.getTitle(), town);
-        addArea(town);
+        registerArea(new Town());
+        registerArea(new Lab());
+        registerArea(new Arena());
 
-        ICMonArea lab = new Lab();
-        this.areas.put(lab.getTitle(), lab);
-        addArea(lab);
+    }
+    private void registerArea(ICMonArea area) {
+        this.areas.put(area.getTitle(), area);
+        addArea(area);
     }
 
     /**
