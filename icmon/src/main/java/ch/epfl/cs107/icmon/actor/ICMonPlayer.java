@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.messages.PassDoorMessage;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
@@ -151,10 +152,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if (isCellInteraction) {
-                // TODO: As soon as the messaging system between the player and the game is implemented,
-                //       this needs to use it.
-
-                System.out.println("*smack* *walks into door*");
+                PassDoorMessage message = new PassDoorMessage(door);
+                state.send(message);
             }
         }
     }

@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
@@ -11,8 +12,10 @@ import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.messages.GamePlayMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -21,6 +24,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ICMon extends AreaGame {
     public static final float CAMERA_SCALE_FACTOR = 15.f;
@@ -30,13 +34,21 @@ public class ICMon extends AreaGame {
     private ArrayList<ICMonEvent> activeEvents;
     private ArrayList<ICMonEvent> newEvents;
     private ArrayList<ICMonEvent> completedEvents;
-    private final String[] areas = {"town"};
+    // private final String[] areas = {"town"};
+    private final HashMap<String, ICMonArea> areas = new HashMap<>();
+    private GamePlayMessage mailbox;
 
     /**
      * Helper method to list all the areas which need to be created.
      */
     private void createAreas() {
-        addArea(new Town());
+        ICMonArea town = new Town();
+        this.areas.put(town.getTitle(), town);
+        addArea(town);
+
+        ICMonArea lab = new Lab();
+        this.areas.put(lab.getTitle(), lab);
+        addArea(lab);
     }
 
     /**
@@ -57,6 +69,11 @@ public class ICMon extends AreaGame {
 
         for (ICMonEvent event : activeEvents)
             event.update(deltaTime);
+
+        if (mailbox != null) {
+            mailbox.process(gameState);
+            mailbox = null;
+        }
 
         // TODO: (idea) make a method which takes an action and a key and then perform that action
         //       when pressing that key.
@@ -81,11 +98,10 @@ public class ICMon extends AreaGame {
             this.eventManager = new ICMonEventManager();
 
             createAreas();
-            initArea(areas[0]);
+
+            initArea("town");
 
             // initialise events TODO: do this better
-            // maybe move this to the events themselves that would be smart
-            // because we are defining events ,mmmmmmmmmm :)
             ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(15, 8), "items/icball");
             CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
@@ -104,12 +120,6 @@ public class ICMon extends AreaGame {
     public void end() {
     }
 
-    /**
-     * Switches the player between the available areas
-     */
-    private void switchArea() {
-        // TODO: Implement this
-    }
 
     /**
      * Initialises a given area by first setting the current area to that area, then spawning the player there
@@ -137,6 +147,20 @@ public class ICMon extends AreaGame {
                 interactable.acceptInteraction((AreaInteractionVisitor) event, isCellInteraction);
             }
         }
+        public void send(GamePlayMessage message) {
+            mailbox = message;
+        }
+
+        /**
+         * Switches the player between the available areas
+         */
+         public void switchArea(String targetAreaKey, DiscreteCoordinates targetCoords) {
+            player.leaveArea();
+            setCurrentArea(targetAreaKey, false);
+            player.enterArea(areas.get(targetAreaKey), targetCoords);
+        }
+
+
     }
     public class ICMonEventManager {
 
