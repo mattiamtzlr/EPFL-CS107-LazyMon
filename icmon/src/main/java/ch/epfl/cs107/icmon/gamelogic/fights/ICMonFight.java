@@ -14,7 +14,7 @@ public class ICMonFight extends PauseMenu {
 
     @Override
     protected void drawMenu(Canvas c) {
-        System.out.println("hi");
+        System.out.println("this is fine");
     }
 
     @Override

@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class ICMonEvent implements Updatable {
 
     public ICMonPlayer getPlayer() {
         return player;
+    }
+
+    public ICMonFight getPauseMenu() {
+        return null;
     }
 
     public final void start(){

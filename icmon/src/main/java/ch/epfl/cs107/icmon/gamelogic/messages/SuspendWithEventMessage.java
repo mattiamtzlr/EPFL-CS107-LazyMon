@@ -1,6 +1,8 @@
 package ch.epfl.cs107.icmon.gamelogic.messages;
 
 import ch.epfl.cs107.icmon.ICMon;
+import ch.epfl.cs107.icmon.gamelogic.actions.AssignPauseMenuAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.EndPauseMenuAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 public class SuspendWithEventMessage extends GamePlayMessage{
@@ -11,5 +13,10 @@ public class SuspendWithEventMessage extends GamePlayMessage{
 
     @Override
     public void process(ICMon.ICMonGameState state) {
+        if (event.getPauseMenu() != null) {
+            event.onStart(new AssignPauseMenuAction(state, this.event.getPauseMenu()));
+            event.onComplete(new EndPauseMenuAction(state));
+            event.start();
+        }
     }
 }

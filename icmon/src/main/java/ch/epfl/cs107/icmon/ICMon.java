@@ -168,18 +168,25 @@ public class ICMon extends AreaGame {
         public void startFightEvent(ICMonFight combat, ICMonFightableActor foe){
              PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat);
              fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
+
+             send(new SuspendWithEventMessage(fightEvent));
              eventManager.registerEvent(fightEvent);
-        }
-
-        public void suspendOtherEvents(ICMonEvent event){
-
         }
 
         public void newPauseMenu(PauseMenu menu){
              setPauseMenu(menu);
+             for (ICMonEvent activeEvent : activeEvents) {
+                 activeEvent.suspend();
+             }
+             requestPause();
         }
 
-
+        public void endPauseMenu() {
+            for (ICMonEvent activeEvent : activeEvents) {
+                activeEvent.resume();
+            }
+             requestResume();
+        }
     }
     public class ICMonEventManager {
 
