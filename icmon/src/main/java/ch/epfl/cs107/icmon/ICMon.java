@@ -6,17 +6,11 @@ import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
-import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
-import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.actions.*;
+import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.icmon.gamelogic.messages.GamePlayMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
-import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -28,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ICMon extends AreaGame {
-    public static final float CAMERA_SCALE_FACTOR = 15.f;
+    public static final float CAMERA_SCALE_FACTOR = 13.f;
     private ICMonPlayer player;
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
