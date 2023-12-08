@@ -5,14 +5,11 @@ import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 public class SuspendWithEventMessage extends GamePlayMessage{
     private ICMonEvent event;
-    private boolean hasPauseMenu;
-    public SuspendWithEventMessage(ICMonEvent event, boolean hasPauseMenu) {
+    public SuspendWithEventMessage(ICMonEvent event) {
         this.event = event;
-        this.hasPauseMenu = hasPauseMenu;
     }
 
     @Override
     public void process(ICMon.ICMonGameState state) {
-        state.suspendOtherEvents(event, hasPauseMenu);
     }
 }

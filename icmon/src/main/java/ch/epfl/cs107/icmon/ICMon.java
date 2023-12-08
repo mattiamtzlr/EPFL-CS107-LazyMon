@@ -171,10 +171,8 @@ public class ICMon extends AreaGame {
              eventManager.registerEvent(fightEvent);
         }
 
-        public void suspendOtherEvents(ICMonEvent event, boolean hasPauseMenu){
-             if (hasPauseMenu) {
-                 event.onStart(new ConnectPauseMenuAction(gameState, ((PokemonFightEvent)event).getPauseMenu()));
-             }
+        public void suspendOtherEvents(ICMonEvent event){
+
         }
 
         public void newPauseMenu(PauseMenu menu){
