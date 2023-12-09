@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.actions.AttackAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.actions.EscapeAction;
+import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
 import ch.epfl.cs107.play.engine.PauseMenu;
@@ -22,21 +23,9 @@ public class ICMonFight extends PauseMenu {
 
         private ICMonFightAction action;
         private String message;
+        private ICMonFightActionSelectionGraphics selectionGraphics;
 
         ICMonFightState() {}
-
-        ICMonFightState(ICMonFightAction action, String message) {
-            this.action = action;
-            this.message = message;
-        }
-
-        public void setAction(ICMonFightAction action) {
-            this.action = action;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
     }
     private Pokemon player;
     private Pokemon foe;
@@ -65,16 +54,30 @@ public class ICMonFight extends PauseMenu {
                 this.arena.setInteractionGraphics(
                         new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Start by pressing space-bar"));
 
-                if (getKeyboard().get(Keyboard.SPACE).isPressed())
+                if (getKeyboard().get(Keyboard.SPACE).isPressed()) {
                     this.currentState = ICMonFightState.ACTION_SELECTION;
+                    this.currentState.selectionGraphics =
+                            new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), player.getFightActions());
+                }
             }
-            case ACTION_SELECTION -> {
-                ICMonFightAction nextAction = player.getFightActions().get(0);
-                System.out.println("action selected: " + nextAction);
 
-                this.currentState = ICMonFightState.ACTION_EXECUTION;
-                this.currentState.action = nextAction;
+            case ACTION_SELECTION -> {
+                this.arena.setInteractionGraphics(this.currentState.selectionGraphics);
+                this.currentState.selectionGraphics.update(deltaTime);
+
+                ICMonFightAction nextAction;
+                if (this.currentState.selectionGraphics.choice() != null) {
+                    nextAction = this.currentState.selectionGraphics.choice();
+
+                    System.out.println("action selected: " + nextAction);
+
+                    this.currentState.selectionGraphics =
+                            new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), player.getFightActions());
+                    this.currentState = ICMonFightState.ACTION_EXECUTION;
+                    this.currentState.action = nextAction;
+                }
             }
+
             case ACTION_EXECUTION -> {
 
                 System.out.println("action execution");
@@ -92,6 +95,7 @@ public class ICMonFight extends PauseMenu {
                     this.currentState = ICMonFightState.FOE_ACTION;
                 }
             }
+
             case FOE_ACTION -> {
                 System.out.println("foe turn");
                 boolean actionSuccess = false;
@@ -115,6 +119,7 @@ public class ICMonFight extends PauseMenu {
 
                 // trust me we really are :)
             }
+
             case CONCLUSION -> {
                 this.arena.setInteractionGraphics(
                         new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, this.currentState.message));
