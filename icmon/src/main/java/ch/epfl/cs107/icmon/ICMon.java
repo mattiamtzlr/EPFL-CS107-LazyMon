@@ -114,6 +114,7 @@ public class ICMon extends AreaGame {
             collectItemEvent.onComplete(new LogAction("Ballin"));
             collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(player, eventManager)));
             collectItemEvent.start();
+
             return true;
         }
         return false;
@@ -186,11 +187,9 @@ public class ICMon extends AreaGame {
 
         public void endPauseMenu() {
             for (ICMonEvent activeEvent : activeEvents) {
-                System.out.println(activeEvent);
                 activeEvent.resume();
             }
             requestResume();
-            System.out.println(activeEvents);
         }
     }
     public class ICMonEventManager {

@@ -26,6 +26,7 @@ public class ICMonEvent implements Updatable {
         onResume(new LogAction("resumed: " + this));
     }
 
+    // this might be bad?
     public ICMonPlayer getPlayer() {
         return player;
     }

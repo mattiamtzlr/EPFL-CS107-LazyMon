@@ -19,7 +19,6 @@ public class SuspendWithEventMessage extends GamePlayMessage{
             event.onStart(new AssignPauseMenuAction(state, this.event.getPauseMenu()));
             event.onStart(new StartPauseMenuAction(state));
             event.onComplete(new EndPauseMenuAction(state));
-            event.onComplete(new LogAction("completed fight !"));
             event.start();
         }
     }
