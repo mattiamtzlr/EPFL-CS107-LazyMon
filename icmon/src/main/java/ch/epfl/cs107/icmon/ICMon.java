@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ICMon extends AreaGame {
-    public static final float CAMERA_SCALE_FACTOR = 15.f;
+    public static final float CAMERA_SCALE_FACTOR = 13.f;
     private ICMonPlayer player;
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
@@ -109,6 +109,7 @@ public class ICMon extends AreaGame {
             // initialise events TODO: do this better
             ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(15, 8), "items/icball");
             CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
+
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
             collectItemEvent.onComplete(new LogAction("Ballin"));
             collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(player, eventManager)));
@@ -166,26 +167,30 @@ public class ICMon extends AreaGame {
         }
 
         public void startFightEvent(ICMonFight combat, ICMonFightableActor foe){
-             PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat);
+             PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat, eventManager);
              fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
-
              send(new SuspendWithEventMessage(fightEvent));
-             eventManager.registerEvent(fightEvent);
         }
 
-        public void newPauseMenu(PauseMenu menu){
-             setPauseMenu(menu);
+        public void newPauseMenu(PauseMenu menu) {
+            setPauseMenu(menu);
+
+        }
+        public void startPauseMenu(){
              for (ICMonEvent activeEvent : activeEvents) {
                  activeEvent.suspend();
              }
              requestPause();
+
         }
 
         public void endPauseMenu() {
             for (ICMonEvent activeEvent : activeEvents) {
+                System.out.println(activeEvent);
                 activeEvent.resume();
             }
-             requestResume();
+            requestResume();
+            System.out.println(activeEvents);
         }
     }
     public class ICMonEventManager {

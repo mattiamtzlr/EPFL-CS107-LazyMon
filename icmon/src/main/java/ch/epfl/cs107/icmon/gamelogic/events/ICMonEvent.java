@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
+import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.play.engine.Updatable;
 
@@ -21,6 +22,8 @@ public class ICMonEvent implements Updatable {
 
     public ICMonEvent(ICMonPlayer player) {
         this.player = player;
+        onSuspension(new LogAction("suspended: " + this));
+        onResume(new LogAction("resumed: " + this));
     }
 
     public ICMonPlayer getPlayer() {
