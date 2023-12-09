@@ -2,10 +2,7 @@ package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.messages.PassDoorMessage;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
@@ -43,7 +40,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
-        pokemonCollection.add(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
 
         setCurrentAnimation(animationLand);
     }
@@ -91,6 +90,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     public void setDialogState(boolean dialogState) {
         this.inDialog = dialogState;
+    }
+
+    public void addPokemon(Pokemon pokemon) {
+        this.pokemonCollection.add(pokemon);
     }
 
     public void setCurrentAnimation(OrientedAnimation currentAnimation) {
@@ -165,7 +168,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (isCellInteraction) {
-                pokemonCollection.get(0).fight(pokemon, state);
+                // pokemonCollection.get(0).fight(pokemon, state);
+                pokemon.fight(pokemonCollection.get(0), state);
             }
         }
     }

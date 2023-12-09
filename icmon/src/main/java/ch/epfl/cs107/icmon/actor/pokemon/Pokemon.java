@@ -46,6 +46,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             alive = false;
     }
 
+    public PokemonProperties properties() {
+        return new PokemonProperties();
+    }
+
     @Override
     public void fight(ICMonFightableActor foe, ICMon.ICMonGameState state) {
         // register combat event (PokemonFightEvent or smth.) -> EventManager
@@ -54,7 +58,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         //      =>
 
         ICMonFight combat = new ICMonFight(this, (Pokemon) foe);
-        state.startFightEvent(combat, foe);
+        state.startFightEvent(combat, this);
 
         state.newPauseMenu(combat);
     }
@@ -80,21 +84,20 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public final class PokemonProperties {
 
         public String name(){
-            return null;
+            return Pokemon.this.name;
         }
 
         public float hp(){
-            return 0f;
+            return Pokemon.this.hp;
         }
 
         public float maxHp(){
-            return 0f;
+            return Pokemon.this.maxHp;
         }
 
         public int damage(){
-            return 0;
+            return Pokemon.this.damage;
         }
-
     }
 
 }
