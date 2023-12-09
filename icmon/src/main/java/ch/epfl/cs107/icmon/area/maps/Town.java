@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
 import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
+import ch.epfl.cs107.icmon.actor.pokemon.Voltball;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
@@ -37,7 +38,9 @@ public class Town extends ICMonArea {
                 this,
                 new DiscreteCoordinates(20, 16)
         ));
+
         registerActor(new Pikachu(this, new DiscreteCoordinates(11, 3)));
+        registerActor(new Voltball(this, new DiscreteCoordinates(23, 23)));
     }
 
     @Override
