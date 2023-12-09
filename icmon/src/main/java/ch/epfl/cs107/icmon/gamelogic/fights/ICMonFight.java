@@ -19,6 +19,24 @@ public class ICMonFight extends PauseMenu {
         ACTION_EXECUTION,
         FOE_ACTION,
         CONCLUSION;
+
+        private ICMonFightAction action;
+        private String message;
+
+        ICMonFightState() {}
+
+        ICMonFightState(ICMonFightAction action, String message) {
+            this.action = action;
+            this.message = message;
+        }
+
+        public void setAction(ICMonFightAction action) {
+            this.action = action;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
     private Pokemon player;
     private Pokemon foe;
@@ -30,7 +48,7 @@ public class ICMonFight extends PauseMenu {
     public ICMonFight(Pokemon player, Pokemon foe) {
         this.player = player;
         this.foe = foe;
-        this.arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, player.properties(), foe.properties());
+        this.arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, foe.properties(), player.properties());
         this.currentState = ICMonFightState.INTRODUCTION;
     }
 
@@ -42,8 +60,6 @@ public class ICMonFight extends PauseMenu {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        ICMonFightAction nextAction = null;
-        String endMessage;
         switch (this.currentState) {
             case INTRODUCTION -> {
                 this.arena.setInteractionGraphics(
@@ -53,21 +69,23 @@ public class ICMonFight extends PauseMenu {
                     this.currentState = ICMonFightState.ACTION_SELECTION;
             }
             case ACTION_SELECTION -> {
-                nextAction = player.getFightActions().get(0);
+                ICMonFightAction nextAction = player.getFightActions().get(0);
                 System.out.println("action selected: " + nextAction);
+
                 this.currentState = ICMonFightState.ACTION_EXECUTION;
+                this.currentState.action = nextAction;
             }
             case ACTION_EXECUTION -> {
 
                 System.out.println("action execution");
-                boolean actionSuccess = nextAction.doAction(foe);
+                boolean actionSuccess = this.currentState.action.doAction(foe);
                 if (!actionSuccess) {
-                    endMessage = new String("you escaped");
                     this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState.message = "you escaped";
                 }
                 else if (!foe.properties().isAlive()) {
-                    endMessage = "you won :)";
                     this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState.message = "you won :)";
                 }
                 else {
 
@@ -84,12 +102,12 @@ public class ICMonFight extends PauseMenu {
                     }
                 }
                 if (!actionSuccess) {
-                    endMessage = "Foe has left, refuses to elaborate";
                     this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState.message = "Foe has left, refuses to elaborate";
                 }
                 else if(!player.properties().isAlive()) {
-                    endMessage = "you lost, L2P";
                     this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState.message = "you lost, L2P";
                 }
                 else {
                     this.currentState = ICMonFightState.ACTION_SELECTION;
@@ -98,9 +116,8 @@ public class ICMonFight extends PauseMenu {
                 // trust me we really are :)
             }
             case CONCLUSION -> {
-                System.out.println("concluding");
                 this.arena.setInteractionGraphics(
-                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, endMessage));
+                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, this.currentState.message));
 
                 if (getKeyboard().get(Keyboard.SPACE).isPressed()) {
                     end();

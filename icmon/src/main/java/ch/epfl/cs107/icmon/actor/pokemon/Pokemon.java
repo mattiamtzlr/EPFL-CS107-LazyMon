@@ -45,7 +45,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     }
 
     public void sufferDamage(int amount) {
-        if (hp > amount)
+        if (hp >= amount)
             hp -= amount;
         else
             alive = false;
@@ -67,7 +67,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         //      =>
 
         ICMonFight combat = new ICMonFight(this, (Pokemon) foe);
-        state.startFightEvent(combat, this);
+        state.startFightEvent(combat, foe);
 
         state.newPauseMenu(combat);
     }
@@ -108,7 +108,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             return Pokemon.this.damage;
         }
         public boolean isAlive() {
-            return Pokemon.this.hp > 0;
+            return Pokemon.this.alive;
         }
     }
 

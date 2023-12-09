@@ -168,8 +168,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (isCellInteraction) {
-                // pokemonCollection.get(0).fight(pokemon, state);
-                pokemon.fight(pokemonCollection.get(0), state);
+                pokemonCollection.get(0).fight(pokemon, state);
+                //pokemon.fight(pokemonCollection.get(0), state);
             }
         }
     }
