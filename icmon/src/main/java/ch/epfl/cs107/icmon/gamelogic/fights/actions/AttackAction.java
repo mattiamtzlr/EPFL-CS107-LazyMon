@@ -11,6 +11,6 @@ public class AttackAction implements ICMonFightAction {
 
     @Override
     public boolean doAction(Pokemon target) {
-        return false;
+        return true;
     }
 }

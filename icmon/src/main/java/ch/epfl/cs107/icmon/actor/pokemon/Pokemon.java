@@ -107,6 +107,9 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         public int damage(){
             return Pokemon.this.damage;
         }
+        public boolean isAlive() {
+            return Pokemon.this.hp > 0;
+        }
     }
 
 }
