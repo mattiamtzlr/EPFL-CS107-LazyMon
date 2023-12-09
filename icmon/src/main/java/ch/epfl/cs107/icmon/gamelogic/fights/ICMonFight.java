@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+
 public class ICMonFight extends PauseMenu {
     private enum ICMonFightState {
         INTRODUCTION, COUNTER_HANDLING, CONCLUSION
@@ -47,7 +48,7 @@ public class ICMonFight extends PauseMenu {
                     this.currentState = ICMonFightState.CONCLUSION;
 
                 this.arena.setInteractionGraphics(
-                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Fighting"));
+                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, this.player.getFightActions().get(0).name()));
 
                 this.pauseTime -= deltaTime;
                 System.out.println(pauseTime);
