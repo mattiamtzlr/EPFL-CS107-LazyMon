@@ -30,7 +30,6 @@ public class ICMonFight extends PauseMenu {
     private Pokemon player;
     private Pokemon foe;
     private ICMonFightArenaGraphics arena;
-    private float pauseTime = 5.0f;
     private boolean running = true;
     private ICMonFightState currentState;
 
@@ -39,6 +38,10 @@ public class ICMonFight extends PauseMenu {
         this.foe = foe;
         this.arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, foe.properties(), player.properties());
         this.currentState = ICMonFightState.INTRODUCTION;
+    }
+
+    public void setPlayer(Pokemon player) {
+        this.player = player;
     }
 
     @Override

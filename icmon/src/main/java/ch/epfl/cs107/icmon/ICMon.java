@@ -9,13 +9,11 @@ import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
-import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.EndOfGameEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.gamelogic.messages.GamePlayMessage;
 import ch.epfl.cs107.icmon.gamelogic.messages.SuspendWithEventMessage;
+import ch.epfl.cs107.icmon.graphics.PokemonSelectionMenu;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -165,6 +163,13 @@ public class ICMon extends AreaGame {
             player.leaveArea();
             setCurrentArea(targetAreaKey, false);
             player.enterArea(areas.get(targetAreaKey), targetCoords);
+        }
+
+        public void startSelectionEvent(ICMonFight combat, ICMonFightableActor foe) {
+             PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getWindow().getKeyboard(), combat);
+             PokemonSelectionEvent selectionEvent =
+                     new PokemonSelectionEvent(player, foe, selectionMenu, combat, eventManager, gameState);
+             send(new SuspendWithEventMessage(selectionEvent));
         }
 
         public void startFightEvent(ICMonFight combat, ICMonFightableActor foe){

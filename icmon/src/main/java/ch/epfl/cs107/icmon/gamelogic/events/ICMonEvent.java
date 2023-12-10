@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class ICMonEvent implements Updatable {
         return player;
     }
 
-    public ICMonFight getPauseMenu() {
+    public PauseMenu getPauseMenu() {
         return null;
     }
 

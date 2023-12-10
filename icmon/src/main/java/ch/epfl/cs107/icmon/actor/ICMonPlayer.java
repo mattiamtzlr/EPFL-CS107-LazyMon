@@ -41,8 +41,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
         addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 
         setCurrentAnimation(animationLand);
     }
@@ -94,6 +94,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     public void addPokemon(Pokemon pokemon) {
         this.pokemonCollection.add(pokemon);
+    }
+
+    public ArrayList<Pokemon> getPokemons() {
+        return new ArrayList<>(this.pokemonCollection);
     }
 
     public void setCurrentAnimation(OrientedAnimation currentAnimation) {
