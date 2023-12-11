@@ -31,7 +31,7 @@ public class PokemonSelectionEvent extends ICMonEvent implements ICMonInteractio
 
     @Override
     public void update(float deltaTime) {
-        if (this.selectionMenu.choice() > 0) {
+        if (this.selectionMenu.choice() >= 0) {
             this.choice = selectionMenu.choice();
             onComplete(new AfterPokemonSelectionFightAction(state, choice, foe));
             complete();

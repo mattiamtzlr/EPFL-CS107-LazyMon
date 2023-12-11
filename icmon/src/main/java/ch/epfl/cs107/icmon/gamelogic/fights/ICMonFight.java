@@ -2,7 +2,6 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.actions.AttackAction;
-import ch.epfl.cs107.icmon.gamelogic.fights.actions.EscapeAction;
 import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
@@ -10,14 +9,14 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-import java.util.ArrayList;
-
 
 public class ICMonFight extends PauseMenu {
     private enum ICMonFightState {
         INTRODUCTION,
         ACTION_SELECTION,
         ACTION_EXECUTION,
+        ACTION_EXECUTION_PAUSE,
+        ACTION_EXECUTION_CONTINUED,
         FOE_ACTION,
         CONCLUSION;
 
@@ -32,6 +31,8 @@ public class ICMonFight extends PauseMenu {
     private ICMonFightArenaGraphics arena;
     private boolean running = true;
     private ICMonFightState currentState;
+
+    private double counter = 1f;
 
     public ICMonFight(Pokemon player, Pokemon foe) {
         this.player = player;
@@ -51,7 +52,8 @@ public class ICMonFight extends PauseMenu {
         switch (this.currentState) {
             case INTRODUCTION -> {
                 this.arena.setInteractionGraphics(
-                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Start by pressing space-bar"));
+                        new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR,
+                            String.format("A wild %s appears!    [ space-bar ]", foe.properties().name())));
 
                 if (getKeyboard().get(Keyboard.SPACE).isPressed()) {
                     this.currentState = ICMonFightState.ACTION_SELECTION;
@@ -68,8 +70,6 @@ public class ICMonFight extends PauseMenu {
                 if (this.currentState.selectionGraphics.choice() != null) {
                     nextAction = this.currentState.selectionGraphics.choice();
 
-                    System.out.println("action selected: " + nextAction);
-
                     this.currentState.selectionGraphics =
                             new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), player.getFightActions());
                     this.currentState = ICMonFightState.ACTION_EXECUTION;
@@ -78,25 +78,43 @@ public class ICMonFight extends PauseMenu {
             }
 
             case ACTION_EXECUTION -> {
+                this.arena.setInteractionGraphics(
+                    new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR,
+                        String.format("%s uses %s!", player.properties().name(), this.currentState.action.name()))
+                );
 
-                System.out.println("action execution");
+                ICMonFightAction nextAction = this.currentState.action;
+                this.currentState = ICMonFightState.ACTION_EXECUTION_PAUSE;
+                this.currentState.action = nextAction;
+            }
+
+            case ACTION_EXECUTION_PAUSE -> {
+                if (this.counter > deltaTime)
+                    this.counter -= deltaTime;
+                else {
+                    this.counter = 1f;
+                    ICMonFightAction nextAction = this.currentState.action;
+                    this.currentState = ICMonFightState.ACTION_EXECUTION_CONTINUED;
+                    this.currentState.action = nextAction;
+                }
+            }
+
+            case ACTION_EXECUTION_CONTINUED -> {
                 boolean actionSuccess = this.currentState.action.doAction(foe);
                 if (!actionSuccess) {
                     this.currentState = ICMonFightState.CONCLUSION;
-                    this.currentState.message = "you escaped";
+                    this.currentState.message = "You escaped the fight!";
                 }
                 else if (!foe.properties().isAlive()) {
                     this.currentState = ICMonFightState.CONCLUSION;
-                    this.currentState.message = "you won :)";
+                    this.currentState.message = String.format("You defeated %s! Well done!", foe.properties().name());
                 }
                 else {
-
                     this.currentState = ICMonFightState.FOE_ACTION;
                 }
             }
 
             case FOE_ACTION -> {
-                System.out.println("foe turn");
                 boolean actionSuccess = false;
                 for (ICMonFightAction action : foe.getFightActions()){
                     if (action instanceof AttackAction) {
@@ -106,11 +124,12 @@ public class ICMonFight extends PauseMenu {
                 }
                 if (!actionSuccess) {
                     this.currentState = ICMonFightState.CONCLUSION;
-                    this.currentState.message = "Foe has left, refuses to elaborate";
+                    this.currentState.message = String.format("%s escaped the fight!", foe.properties().name());
                 }
                 else if(!player.properties().isAlive()) {
                     this.currentState = ICMonFightState.CONCLUSION;
-                    this.currentState.message = "you lost, L2P";
+                    this.currentState.message = String.format("Your %s got defeated by %s. You lost :(",
+                        player.properties().name(), foe.properties().name());
                 }
                 else {
                     this.currentState = ICMonFightState.ACTION_SELECTION;

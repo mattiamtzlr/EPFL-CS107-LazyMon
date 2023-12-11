@@ -16,7 +16,7 @@ import java.awt.*;
 public final class ICMonFightTextGraphics extends ICMonFightInteractionGraphics {
 
     private static final float FONT_SIZE = .6f;
-    private static final int MAX_LINE_SIZE = 30;
+    private static final int MAX_LINE_SIZE = 50;
 
     private final GraphicsEntity[] lines;
 

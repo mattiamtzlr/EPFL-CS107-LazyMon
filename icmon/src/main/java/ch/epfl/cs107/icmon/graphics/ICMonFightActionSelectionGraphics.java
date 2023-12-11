@@ -45,7 +45,8 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
         this.scalefactor = scaleFactor;
         this.actions = actions.toArray(new ICMonFightAction[0]);
         selectors = new GraphicsEntity[3];
-        header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 1f), new TextGraphics("Please, select an action", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+        header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 1f),
+            new TextGraphics("Select an action  [ < ]  [ > ]", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
         currentChoice = 0;
     }
 

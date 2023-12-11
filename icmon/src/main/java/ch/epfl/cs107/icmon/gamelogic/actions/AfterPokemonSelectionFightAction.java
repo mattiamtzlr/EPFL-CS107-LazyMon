@@ -13,7 +13,6 @@ public class AfterPokemonSelectionFightAction implements Action {
                                             ICMonFightableActor foe) {
         this.state = state;
         this.choice = choice;
-        System.out.println(this.choice + " in AfterPokemonSelectionFightAction");
         this.foe = foe;
     }
 

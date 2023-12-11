@@ -174,7 +174,6 @@ public class ICMon extends AreaGame {
         }
 
         public void startFightEvent(int choice, ICMonFightableActor foe){
-            System.out.println(choice + " in ICMon.java");
             ICMonFight combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
             PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat, eventManager);
             fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));

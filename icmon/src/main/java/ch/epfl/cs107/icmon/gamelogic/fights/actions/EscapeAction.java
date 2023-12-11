@@ -6,7 +6,7 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 public class EscapeAction implements ICMonFightAction {
     @Override
     public String name() {
-        return "Run away!";
+        return "Run away";
     }
 
     @Override
