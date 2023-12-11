@@ -40,10 +40,6 @@ public class ICMonFight extends PauseMenu {
         this.currentState = ICMonFightState.INTRODUCTION;
     }
 
-    public void setPlayer(Pokemon player) {
-        this.player = player;
-    }
-
     @Override
     protected void drawMenu(Canvas c) {
         arena.draw(c);
@@ -51,7 +47,7 @@ public class ICMonFight extends PauseMenu {
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
+        Keyboard keyboard = getKeyboard();
         switch (this.currentState) {
             case INTRODUCTION -> {
                 this.arena.setInteractionGraphics(
@@ -60,7 +56,7 @@ public class ICMonFight extends PauseMenu {
                 if (getKeyboard().get(Keyboard.SPACE).isPressed()) {
                     this.currentState = ICMonFightState.ACTION_SELECTION;
                     this.currentState.selectionGraphics =
-                            new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), player.getFightActions());
+                            new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightActions());
                 }
             }
 
@@ -133,6 +129,7 @@ public class ICMonFight extends PauseMenu {
                 }
             }
         }
+        super.update(deltaTime);
     }
     public boolean isRunning(){
         return running; // as long as this returns true, the game is paused

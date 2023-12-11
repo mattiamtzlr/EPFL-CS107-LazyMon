@@ -11,19 +11,19 @@ import java.util.ArrayList;
 
 public class PokemonSelectionMenu extends PauseMenu {
     private PokemonSelectionMenuGraphics graphics;
-    private ICMonFight combat;
     private boolean running = true;
+    private int choice = -1;
 
-    public PokemonSelectionMenu(ArrayList<Pokemon> pokemons, Keyboard keyboard, ICMonFight combat) {
+    public PokemonSelectionMenu(ArrayList<Pokemon> pokemons, Keyboard keyboard) {
         this.graphics = new PokemonSelectionMenuGraphics(CAMERA_SCALE_FACTOR, keyboard, pokemons);
-        this.combat = combat;
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        if (this.graphics.choice() != null) {
-            combat.setPlayer(graphics.choice());
+        graphics.update(deltaTime);
+        if (this.graphics.choice() >= 0) {
+            this.choice = this.graphics.choice();
             end();
             this.running = false;
         }
@@ -36,5 +36,9 @@ public class PokemonSelectionMenu extends PauseMenu {
 
     public boolean isRunning() {
         return this.running;
+    }
+
+    public int choice() {
+        return choice;
     }
 }

@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
@@ -165,17 +166,19 @@ public class ICMon extends AreaGame {
             player.enterArea(areas.get(targetAreaKey), targetCoords);
         }
 
-        public void startSelectionEvent(ICMonFight combat, ICMonFightableActor foe) {
-             PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getWindow().getKeyboard(), combat);
+        public void startSelectionEvent(ICMonFightableActor foe) {
+             PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getCurrentArea().getKeyboard());
              PokemonSelectionEvent selectionEvent =
-                     new PokemonSelectionEvent(player, foe, selectionMenu, combat, eventManager, gameState);
+                     new PokemonSelectionEvent(player, foe, selectionMenu,  eventManager, gameState);
              send(new SuspendWithEventMessage(selectionEvent));
         }
 
-        public void startFightEvent(ICMonFight combat, ICMonFightableActor foe){
-             PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat, eventManager);
-             fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
-             send(new SuspendWithEventMessage(fightEvent));
+        public void startFightEvent(int choice, ICMonFightableActor foe){
+            System.out.println(choice + " in ICMon.java");
+            ICMonFight combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
+            PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat, eventManager);
+            fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
+            send(new SuspendWithEventMessage(fightEvent));
         }
 
         public void newPauseMenu(PauseMenu menu) {

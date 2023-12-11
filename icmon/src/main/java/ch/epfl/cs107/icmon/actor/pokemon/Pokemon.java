@@ -46,7 +46,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     }
 
-    public void sufferDamage(int amount) {
+    public void sufferDamage(double amount) {
         if (hp >= amount)
             hp -= amount;
         else
@@ -63,13 +63,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     @Override
     public void fight(ICMonFightableActor foe, ICMon.ICMonGameState state) {
-        // register combat event (PokemonFightEvent or smth.) -> EventManager
-        //      => its completion should make the foe disappear -> LeaveAreaAction
-        // send SuspendWithEvent message to game -> over player
-        //      =>
-
-        ICMonFight combat = new ICMonFight(this, (Pokemon) foe);
-        state.startSelectionEvent(combat, (Pokemon) foe);
+        state.startSelectionEvent(foe);
     }
 
     @Override

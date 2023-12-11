@@ -20,8 +20,6 @@ public class PokemonFightEvent extends ICMonEvent implements ICMonInteractionVis
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
-        combat.update(deltaTime);
         if (!combat.isRunning())
             complete();
     }

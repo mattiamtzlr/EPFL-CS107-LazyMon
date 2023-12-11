@@ -43,6 +43,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
 
         setCurrentAnimation(animationLand);
     }
@@ -74,11 +76,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private void moveIfPressed(Orientation orientation, Button[] buttons) {
         for (Button b : buttons) {
             if (b.isDown()) {
-              if (!isDisplacementOccurs()) {
-                orientate(orientation);
-                currentAnimation.orientate(orientation);
-                move(ANIMATION_DURATION);
-              }
+                if (!isDisplacementOccurs()) {
+                    orientate(orientation);
+                    currentAnimation.orientate(orientation);
+                    move(ANIMATION_DURATION);
+                }
             }
         }
     }

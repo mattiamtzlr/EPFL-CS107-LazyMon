@@ -13,22 +13,29 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 
 public class PokemonSelectionEvent extends ICMonEvent implements ICMonInteractionVisitor {
     private PokemonSelectionMenu selectionMenu;
+    private int choice = 0;
+    private ICMon.ICMonGameState state;
+    private ICMonFightableActor foe;
 
     public PokemonSelectionEvent(ICMonPlayer player, ICMonFightableActor foe,
-                                 PokemonSelectionMenu selectionMenu, ICMonFight combat,
+                                 PokemonSelectionMenu selectionMenu,
                                  ICMon.ICMonEventManager eventManager, ICMon.ICMonGameState state) {
         super(player);
         this.selectionMenu = selectionMenu;
+        this.state = state;
+        this.foe = foe;
+
         onStart(new RegisterEventAction(this, eventManager));
-        onComplete(new AfterPokemonSelectionFightAction(state, combat, foe));
         onComplete(new UnRegisterEventAction(this, eventManager));
     }
 
     @Override
     public void update(float deltaTime) {
-        selectionMenu.update(deltaTime);
-        if (!selectionMenu.isRunning())
+        if (this.selectionMenu.choice() > 0) {
+            this.choice = selectionMenu.choice();
+            onComplete(new AfterPokemonSelectionFightAction(state, choice, foe));
             complete();
+        }
     }
 
     @Override
