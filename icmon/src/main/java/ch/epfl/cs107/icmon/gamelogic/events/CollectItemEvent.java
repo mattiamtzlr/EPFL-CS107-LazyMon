@@ -11,10 +11,11 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisitor {
+    private ICMon.ICMonGameState state;
     private ICMonItem item;
 
-    public CollectItemEvent(ICMonPlayer player, ICMonItem item, ICMon.ICMonEventManager eventManager) {
-        super(player);
+    public CollectItemEvent(ICMon.ICMonGameState state, ICMonItem item, ICMon.ICMonEventManager eventManager) {
+        this.state = state;
         this.item = item;
         this.onStart(new RegisterEventAction(this, eventManager));
         this.onStart(new LogAction("Hi, try to pick up the ICBall using \"F\""));
@@ -23,7 +24,7 @@ public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisi
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        getPlayer().openDialog(new Dialog("collect_item_event_interaction_with_icshopassistant"));
+        this.state.openDialog(new Dialog("collect_item_event_interaction_with_icshopassistant"));
     }
 
     @Override

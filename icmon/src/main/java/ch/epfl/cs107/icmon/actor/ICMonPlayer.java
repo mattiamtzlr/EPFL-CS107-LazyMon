@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.messages.IndependentDialogMessage;
 import ch.epfl.cs107.icmon.gamelogic.messages.PassDoorMessage;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -40,11 +41,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
-        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+        /*addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));*/
 
         setCurrentAnimation(animationLand);
     }
@@ -174,8 +175,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (isCellInteraction) {
-                pokemonCollection.get(0).fight(pokemon, state);
-                //pokemon.fight(pokemonCollection.get(0), state);
+                if (!pokemonCollection.isEmpty())
+                    pokemonCollection.get(0).fight(pokemon, state);
+                else if (!isDisplacementOccurs()) {
+                    openDialog(new Dialog("no_pokemon"));
+                    orientate(getOrientation().opposite());
+                    move(ANIMATION_DURATION);
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
@@ -10,8 +11,6 @@ import ch.epfl.cs107.play.engine.Updatable;
 import java.util.ArrayList;
 
 public class ICMonEvent implements Updatable {
-    private ICMonPlayer player;
-
     private boolean started = false;
     private boolean suspended = false;
     private boolean completed = false;
@@ -21,15 +20,9 @@ public class ICMonEvent implements Updatable {
     private ArrayList<Action> suspendActions = new ArrayList<>();
     private ArrayList<Action> resumeActions = new ArrayList<>();
 
-    public ICMonEvent(ICMonPlayer player) {
-        this.player = player;
+    public ICMonEvent() {
         onSuspension(new LogAction("suspended: " + this));
         onResume(new LogAction("resumed: " + this));
-    }
-
-    // this might be bad?
-    public ICMonPlayer getPlayer() {
-        return player;
     }
 
     public PauseMenu getPauseMenu() {

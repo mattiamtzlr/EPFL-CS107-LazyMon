@@ -14,7 +14,7 @@
 - TODO
 
 ## Changes to the architecture
-not really, TODO ?
+- Changed the MAX_LINE_LENGTH constant in Dialog.java to 50, because it looks better to have longer lines.
 
 ## Extensions
 not really, TODO ?

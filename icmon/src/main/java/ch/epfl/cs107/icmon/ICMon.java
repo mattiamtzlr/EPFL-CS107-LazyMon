@@ -7,6 +7,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
+import ch.epfl.cs107.icmon.area.maps.House;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -20,6 +21,7 @@ import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.PauseMenu;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -48,7 +50,7 @@ public class ICMon extends AreaGame {
         registerArea(new Town());
         registerArea(new Lab());
         registerArea(new Arena());
-
+        registerArea(new House());
     }
     private void registerArea(ICMonArea area) {
         this.areas.put(area.getTitle(), area);
@@ -103,15 +105,15 @@ public class ICMon extends AreaGame {
 
             createAreas();
 
-            initArea("town");
+            initArea("house");
 
             // initialise events TODO: do this better
             ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(15, 8), "items/icball");
-            CollectItemEvent collectItemEvent = new CollectItemEvent(player, ball, eventManager);
+            CollectItemEvent collectItemEvent = new CollectItemEvent(gameState, ball, eventManager);
 
             collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
             collectItemEvent.onComplete(new LogAction("Ballin"));
-            collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(player, eventManager)));
+            collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(gameState, eventManager)));
             collectItemEvent.start();
 
             return true;
@@ -169,15 +171,19 @@ public class ICMon extends AreaGame {
         public void startSelectionEvent(ICMonFightableActor foe) {
              PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getCurrentArea().getKeyboard());
              PokemonSelectionEvent selectionEvent =
-                     new PokemonSelectionEvent(player, foe, selectionMenu,  eventManager, gameState);
+                     new PokemonSelectionEvent(gameState, foe, selectionMenu,  eventManager);
              send(new SuspendWithEventMessage(selectionEvent));
         }
 
         public void startFightEvent(int choice, ICMonFightableActor foe){
             ICMonFight combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
-            PokemonFightEvent fightEvent = new PokemonFightEvent(player, combat, eventManager);
+            PokemonFightEvent fightEvent = new PokemonFightEvent(gameState, combat, eventManager);
             fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
             send(new SuspendWithEventMessage(fightEvent));
+        }
+
+        public void openDialog(Dialog dialog) {
+             player.openDialog(dialog);
         }
 
         public void newPauseMenu(PauseMenu menu) {

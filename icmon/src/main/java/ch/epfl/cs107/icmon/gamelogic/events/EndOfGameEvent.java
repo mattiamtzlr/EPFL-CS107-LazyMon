@@ -10,16 +10,15 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class EndOfGameEvent extends ICMonEvent implements ICMonInteractionVisitor {
-
+    private final ICMon.ICMonGameState state;
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
     }
 
-    public EndOfGameEvent(ICMonPlayer player, ICMon.ICMonEventManager eventManager) {
-        super(player);
+    public EndOfGameEvent(ICMon.ICMonGameState state, ICMon.ICMonEventManager eventManager) {
+        this.state = state;
         this.onStart(new RegisterEventAction(this, eventManager));
         this.onStart(new LogAction("now try to talk to the person over there ->"));
         this.onComplete(new UnRegisterEventAction(this, eventManager));
@@ -28,6 +27,6 @@ public class EndOfGameEvent extends ICMonEvent implements ICMonInteractionVisito
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        getPlayer().openDialog(new Dialog("end_of_game_event_interaction_with_icshopassistant"));
+        this.state.openDialog(new Dialog("end_of_game_event_interaction_with_icshopassistant"));
     }
 }

@@ -9,10 +9,8 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 
 public class PokemonFightEvent extends ICMonEvent implements ICMonInteractionVisitor {
-
     private ICMonFight combat;
-    public PokemonFightEvent(ICMonPlayer player, ICMonFight combat, ICMon.ICMonEventManager eventManager) {
-        super(player);
+    public PokemonFightEvent(ICMon.ICMonGameState state, ICMonFight combat, ICMon.ICMonEventManager eventManager) {
         this.combat = combat;
         onStart(new RegisterEventAction(this, eventManager));
         onComplete(new UnRegisterEventAction(this, eventManager));

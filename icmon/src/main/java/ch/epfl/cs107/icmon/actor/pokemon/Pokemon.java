@@ -46,6 +46,11 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     }
 
+    @Override
+    public boolean takeCellSpace() {
+        return super.takeCellSpace();
+    }
+
     public void sufferDamage(double amount) {
         if (hp >= amount)
             hp -= amount;
