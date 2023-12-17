@@ -35,7 +35,7 @@ public final class Dialog implements Updatable, Graphics {
     private static final float FONT_SIZE = 0.6f;
 
     /// Number max of char per line of text
-    private static final int MAX_LINE_SIZE = 35;
+    private static final int MAX_LINE_SIZE = 60;
 
     private static final String BACKGROUND_NAME = "dialog";
 
