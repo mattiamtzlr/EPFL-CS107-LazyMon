@@ -45,7 +45,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
         addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));*/
+        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Tentacool(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));*/
 
         setCurrentAnimation(animationLand);
     }
