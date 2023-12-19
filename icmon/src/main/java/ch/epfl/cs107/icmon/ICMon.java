@@ -92,6 +92,8 @@ public class ICMon extends AreaGame {
         //       when pressing that key.
         if (keyboard.get(Keyboard.R).isPressed())
             this.begin(getWindow(), getFileSystem());
+        if (keyboard.get(Keyboard.C).isPressed())
+            System.out.println(player.getCurrentCells());
     }
 
     /**
@@ -139,7 +141,7 @@ public class ICMon extends AreaGame {
                 new IntroductionEvent(eventManager, gameState),
                 new FirstInteractionWithProfessorOakEvent(eventManager, gameState),
                 collectItemEvent,
-                new EndOfGameEvent(gameState, eventManager)
+                new EndBossEvent(eventManager, gameState)
                 );
         chain.start();
     }

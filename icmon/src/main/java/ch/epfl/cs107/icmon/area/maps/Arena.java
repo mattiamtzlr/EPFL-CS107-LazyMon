@@ -19,7 +19,7 @@ public class Arena extends ICMonArea {
         registerActor(new Foreground(this));
         registerActor(new Door(
                 "town",
-                new DiscreteCoordinates(20,15),
+                new DiscreteCoordinates(15,23),
                 this,
                 new DiscreteCoordinates(4,1),
                 new DiscreteCoordinates(5,1)));

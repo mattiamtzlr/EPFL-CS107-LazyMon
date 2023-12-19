@@ -30,13 +30,13 @@ public class Town extends ICMonArea {
                 "lab",
                 new DiscreteCoordinates(6, 2),
                 this,
-                new DiscreteCoordinates(15, 24)
+                new DiscreteCoordinates(20, 16)
         ));
         registerActor(new Door(
                 "arena",
                 new DiscreteCoordinates(4, 2),
                 this,
-                new DiscreteCoordinates(20, 16)
+                new DiscreteCoordinates(15, 24)
         ));
         registerActor(new Door(
                 "house",
