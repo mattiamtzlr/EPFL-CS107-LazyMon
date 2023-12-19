@@ -131,11 +131,12 @@ public class ICMon extends AreaGame {
     }
 
     private void events(){
-        this.setCurrentArea("lab", false);
-        ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(12, 7), "items/icball");
+
+        Area ballArea = areas.get("lab");
+        ICBall ball = new ICBall(ballArea, new DiscreteCoordinates(12, 4), "items/icball");
         CollectItemEvent collectItemEvent = new CollectItemEvent(gameState, ball, eventManager);
-        collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
-        this.setCurrentArea("house", false);
+        collectItemEvent.onStart(new RegisterInAreaAction(ball, ballArea));
+
         ICMonChainedEvent chain = new ICMonChainedEvent(eventManager,
                 new IntroductionEvent(eventManager, gameState),
                 new FirstInteractionWithProfessorOakEvent(eventManager, gameState),
@@ -171,6 +172,7 @@ public class ICMon extends AreaGame {
             }
         }
         public void givePlayerPokemon(String pokemonName) {
+            openDialog(new Dialog("received_new_pokemon"));
             player.addPokemon(pokedex.get(pokemonName));
         }
         public void send(GamePlayMessage message) {
