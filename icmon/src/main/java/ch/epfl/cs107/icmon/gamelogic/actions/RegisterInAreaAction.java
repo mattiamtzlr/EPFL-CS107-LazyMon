@@ -15,5 +15,6 @@ public class RegisterInAreaAction implements Action {
     @Override
     public void perform() {
         area.registerActor(actor);
+        System.out.println(area + " " + actor);
     }
 }

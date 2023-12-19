@@ -4,6 +4,9 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
@@ -33,6 +36,7 @@ import java.util.HashMap;
 
 public class ICMon extends AreaGame {
     public static final float CAMERA_SCALE_FACTOR = 13.f;
+    private HashMap<String, Pokemon> pokedex = new HashMap<>();
     private ICMonPlayer player;
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
@@ -51,6 +55,11 @@ public class ICMon extends AreaGame {
         registerArea(new Lab());
         registerArea(new Arena());
         registerArea(new House());
+    }
+    private void createPokemon() {
+        this.pokedex.put("bulbasaur", new Bulbasaur(getCurrentArea(), new DiscreteCoordinates(0,0)));
+        this.pokedex.put("latios", new Latios(getCurrentArea(), new DiscreteCoordinates(0,0)));
+        this.pokedex.put("nidoqueen", new Nidoqueen(getCurrentArea(), new DiscreteCoordinates(0,0)));
     }
     private void registerArea(ICMonArea area) {
         this.areas.put(area.getTitle(), area);
@@ -105,17 +114,10 @@ public class ICMon extends AreaGame {
 
             createAreas();
 
+
             initArea("house");
-
-            // initialise events TODO: do this better
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(15, 8), "items/icball");
-            CollectItemEvent collectItemEvent = new CollectItemEvent(gameState, ball, eventManager);
-
-            collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
-            collectItemEvent.onComplete(new LogAction("Ballin"));
-            collectItemEvent.onComplete(new StartEventAction(new EndOfGameEvent(gameState, eventManager)));
-            collectItemEvent.start();
-
+            createPokemon();
+            events();
             return true;
         }
         return false;
@@ -128,7 +130,20 @@ public class ICMon extends AreaGame {
     public void end() {
     }
 
-
+    private void events(){
+        this.setCurrentArea("lab", false);
+        ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(12, 7), "items/icball");
+        CollectItemEvent collectItemEvent = new CollectItemEvent(gameState, ball, eventManager);
+        collectItemEvent.onStart(new RegisterInAreaAction(ball, getCurrentArea()));
+        this.setCurrentArea("house", false);
+        ICMonChainedEvent chain = new ICMonChainedEvent(eventManager,
+                new IntroductionEvent(eventManager, gameState),
+                new FirstInteractionWithProfessorOakEvent(eventManager, gameState),
+                collectItemEvent,
+                new EndOfGameEvent(gameState, eventManager)
+                );
+        chain.start();
+    }
     /**
      * Initialises a given area by first setting the current area to that area, then spawning the player there
      * and finally letting the player enter the area.
@@ -154,6 +169,9 @@ public class ICMon extends AreaGame {
             for (ICMonEvent event : ICMon.this.activeEvents) {
                 interactable.acceptInteraction((AreaInteractionVisitor) event, isCellInteraction);
             }
+        }
+        public void givePlayerPokemon(String pokemonName) {
+            player.addPokemon(pokedex.get(pokemonName));
         }
         public void send(GamePlayMessage message) {
             mailbox = message;

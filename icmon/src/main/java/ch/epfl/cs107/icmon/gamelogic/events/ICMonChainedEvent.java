@@ -3,15 +3,16 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ICMonChainedEvent extends ICMonEvent{
+public class ICMonChainedEvent extends ICMonEvent implements ICMonInteractionVisitor {
     private final ArrayList<ICMonEvent> chain = new ArrayList<>();
     private final ICMonEvent initialEvent;
 
-    public ICMonChainedEvent(ICMonEvent initialEvent,ICMon.ICMonEventManager eventManager, ICMonEvent... chain) {
+    public ICMonChainedEvent(ICMon.ICMonEventManager eventManager, ICMonEvent initialEvent, ICMonEvent... chain) {
         super(eventManager);
         this.chain.addAll(Arrays.asList(chain));
         this.initialEvent = initialEvent;

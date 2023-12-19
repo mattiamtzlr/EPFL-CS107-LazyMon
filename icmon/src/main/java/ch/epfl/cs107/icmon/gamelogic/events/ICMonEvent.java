@@ -25,8 +25,12 @@ public class ICMonEvent implements Updatable {
     public ICMonEvent(ICMon.ICMonEventManager eventManager) {
         onStart(new RegisterEventAction(this, eventManager));
         onComplete(new UnRegisterEventAction(this, eventManager));
-        //onSuspension(new LogAction("suspended: " + this));
-        //onResume(new LogAction("resumed: " + this));
+
+        // debugging
+        onStart(new LogAction("started: " + this));
+        onSuspension(new LogAction("suspended: " + this));
+        onResume(new LogAction("resumed: " + this));
+        onComplete(new LogAction("completed: " + this));
     }
 
     public PauseMenu getPauseMenu() {
