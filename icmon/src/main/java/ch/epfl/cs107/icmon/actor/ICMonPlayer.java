@@ -143,6 +143,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         return true;
     }
 
+     public boolean hasSurf(){
+        // TODO this is w.i.p.
+        boolean surf = false;
+        for (Pokemon pokemon : pokemonCollection){
+            if (pokemon instanceof Voltball) {
+                surf = true;
+                break;
+            }
+        }
+        return surf;
+
+    }
     @Override
     public void draw(Canvas canvas) {
         currentAnimation.draw(canvas);
@@ -158,9 +170,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     default -> setCurrentAnimation(animationLand);
                     case SURF -> setCurrentAnimation(animationWater);
                 }
+
             }
         }
-
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if(!isCellInteraction){

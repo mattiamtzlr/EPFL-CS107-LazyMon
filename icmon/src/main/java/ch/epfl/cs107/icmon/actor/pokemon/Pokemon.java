@@ -33,7 +33,6 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private int damage;
     private RPGSprite sprite;
     private ArrayList<ICMonFightAction> fightActions = new ArrayList<>();
-
     public Pokemon(Area ownerArea, DiscreteCoordinates position, String name, int dmg, int maxHp,
                    ICMonFightAction ... fightActions) {
         super(ownerArea, Orientation.DOWN, position);

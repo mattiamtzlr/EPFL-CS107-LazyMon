@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.area;
 
+import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
@@ -93,6 +94,9 @@ public class ICMonBehavior extends AreaBehavior {
         @Override
         protected boolean canEnter(Interactable entity) {
             if (this.getType().getWalkingType() == AllowedWalkingType.NONE) return false;
+            if (entity instanceof ICMonPlayer && this.getType().getWalkingType() == AllowedWalkingType.SURF){
+                return ((ICMonPlayer) entity).hasSurf();
+            }
             if (!entity.takeCellSpace())
                 return true;
             for (Interactable entityInCell : entities)

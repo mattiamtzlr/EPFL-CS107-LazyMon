@@ -4,10 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
-import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.House;
@@ -60,6 +57,7 @@ public class ICMon extends AreaGame {
         this.pokedex.put("bulbasaur", new Bulbasaur(getCurrentArea(), new DiscreteCoordinates(0,0)));
         this.pokedex.put("latios", new Latios(getCurrentArea(), new DiscreteCoordinates(0,0)));
         this.pokedex.put("nidoqueen", new Nidoqueen(getCurrentArea(), new DiscreteCoordinates(0,0)));
+        this.pokedex.put("voltball", new Voltball(getCurrentArea(), new DiscreteCoordinates(0, 0)));
     }
     private void registerArea(ICMonArea area) {
         this.areas.put(area.getTitle(), area);
@@ -174,6 +172,7 @@ public class ICMon extends AreaGame {
         public void givePlayerPokemon(String pokemonName) {
             openDialog(new Dialog("received_new_pokemon"));
             player.addPokemon(pokedex.get(pokemonName));
+            player.addPokemon(pokedex.get("voltball"));
         }
         public void send(GamePlayMessage message) {
             mailbox = message;

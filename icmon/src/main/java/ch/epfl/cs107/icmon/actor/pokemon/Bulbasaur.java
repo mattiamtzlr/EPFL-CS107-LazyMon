@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Bulbasaur extends Pokemon{
     public Bulbasaur(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "bulbasaur", 7, 60,
+        super(ownerArea, position, "bulbasaur", 20, 60,
             new EscapeAction());
 
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
