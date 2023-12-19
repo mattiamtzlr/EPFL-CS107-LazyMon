@@ -21,8 +21,8 @@ public class ICMonEvent implements Updatable {
     private ArrayList<Action> resumeActions = new ArrayList<>();
 
     public ICMonEvent() {
-        onSuspension(new LogAction("suspended: " + this));
-        onResume(new LogAction("resumed: " + this));
+        //onSuspension(new LogAction("suspended: " + this));
+        //onResume(new LogAction("resumed: " + this));
     }
 
     public PauseMenu getPauseMenu() {
