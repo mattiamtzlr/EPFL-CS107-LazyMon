@@ -7,7 +7,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Voltball extends Pokemon {
     public Voltball(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "voltball", 2, 15,
-                new AttackAction(), new EscapeAction());
+        super(ownerArea, position, "voltball", 8, 60,
+                new EscapeAction());
+        this.addFightAction(new AttackAction(this.properties().damage()), 0);
     }
 }

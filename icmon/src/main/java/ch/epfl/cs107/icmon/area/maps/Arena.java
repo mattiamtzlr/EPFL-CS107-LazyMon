@@ -1,9 +1,7 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.Door;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
-import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
+import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;
@@ -26,9 +24,10 @@ public class Arena extends ICMonArea {
                 new DiscreteCoordinates(4,1),
                 new DiscreteCoordinates(5,1)));
 
-        registerActor(new Bulbasaur(this, new DiscreteCoordinates(6,6)));
-        registerActor(new Nidoqueen(this, new DiscreteCoordinates(4,6)));
-        registerActor(new Latios(this, new DiscreteCoordinates(2,6)));
+        registerActor(new Enton(this, new DiscreteCoordinates(2, 6)));
+        registerActor(new Gengar(this, new DiscreteCoordinates(3, 6)));
+        registerActor(new Kadabra(this, new DiscreteCoordinates(5, 6)));
+        registerActor(new Tentacool(this, new DiscreteCoordinates(6, 6)));
     }
 
     @Override

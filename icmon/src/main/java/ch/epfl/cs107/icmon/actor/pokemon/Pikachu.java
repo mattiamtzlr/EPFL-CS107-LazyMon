@@ -8,7 +8,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Pikachu extends Pokemon{
     public Pikachu(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "pikachu", 3, 20,
-                new AttackAction(), new EscapeAction(), new ShockAction());
+        super(ownerArea, position, "pikachu", 9, 70,
+                new EscapeAction(), new ShockAction());
+        this.addFightAction(new AttackAction(this.properties().damage()), 0);
     }
 }

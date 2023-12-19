@@ -46,6 +46,14 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     }
 
+    protected void addFightAction(ICMonFightAction fightAction) {
+        this.fightActions.add(fightAction);
+    }
+
+    protected void addFightAction(ICMonFightAction fightAction, int index) {
+        this.fightActions.add(index, fightAction);
+    }
+
     @Override
     public boolean takeCellSpace() {
         return super.takeCellSpace();
