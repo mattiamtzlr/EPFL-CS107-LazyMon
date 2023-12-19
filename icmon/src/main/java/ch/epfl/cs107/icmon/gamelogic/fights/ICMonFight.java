@@ -18,6 +18,7 @@ public class ICMonFight extends PauseMenu {
         ACTION_EXECUTION_PAUSE,
         ACTION_EXECUTION_CONTINUED,
         FOE_ACTION,
+        DRAW_LAST_FRAME,
         CONCLUSION;
 
         private ICMonFightAction action;
@@ -102,11 +103,11 @@ public class ICMonFight extends PauseMenu {
             case ACTION_EXECUTION_CONTINUED -> {
                 boolean actionSuccess = this.currentState.action.doAction(foe);
                 if (!actionSuccess) {
-                    this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState = ICMonFightState.DRAW_LAST_FRAME;
                     this.currentState.message = "You escaped the fight!";
                 }
                 else if (!foe.properties().isAlive()) {
-                    this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState = ICMonFightState.DRAW_LAST_FRAME;
                     this.currentState.message = String.format("You defeated %s! Well done!", foe.properties().name());
                 }
                 else {
@@ -123,11 +124,11 @@ public class ICMonFight extends PauseMenu {
                     }
                 }
                 if (!actionSuccess) {
-                    this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState = ICMonFightState.DRAW_LAST_FRAME;
                     this.currentState.message = String.format("%s escaped the fight!", foe.properties().name());
                 }
                 else if(!player.properties().isAlive()) {
-                    this.currentState = ICMonFightState.CONCLUSION;
+                    this.currentState = ICMonFightState.DRAW_LAST_FRAME;
                     this.currentState.message = String.format("Your %s got defeated by %s. You lost :(",
                         player.properties().name(), foe.properties().name());
                 }
@@ -136,6 +137,12 @@ public class ICMonFight extends PauseMenu {
                 }
 
                 // trust me we really are :)
+            }
+
+            case DRAW_LAST_FRAME -> {
+                this.currentState = ICMonFightState.CONCLUSION;
+                this.currentState.message = String.format("Your %s got defeated by %s. You lost :(",
+                        player.properties().name(), foe.properties().name());
             }
 
             case CONCLUSION -> {

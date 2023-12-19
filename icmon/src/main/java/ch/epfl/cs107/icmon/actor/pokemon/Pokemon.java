@@ -62,8 +62,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public void sufferDamage(double amount) {
         if (hp >= amount)
             hp -= amount;
-        else
-            alive = false;
+        else {
+            this.alive = false;
+            this.hp = 0;
+        }
     }
 
     public ArrayList<ICMonFightAction> getFightActions() {
