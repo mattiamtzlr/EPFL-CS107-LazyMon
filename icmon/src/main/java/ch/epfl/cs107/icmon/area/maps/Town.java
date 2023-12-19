@@ -40,7 +40,7 @@ public class Town extends ICMonArea {
         ));
         registerActor(new Door(
                 "house",
-                new DiscreteCoordinates(2, 2),
+                new DiscreteCoordinates(3, 2),
                 this,
                 new DiscreteCoordinates(7, 27)
         ));
