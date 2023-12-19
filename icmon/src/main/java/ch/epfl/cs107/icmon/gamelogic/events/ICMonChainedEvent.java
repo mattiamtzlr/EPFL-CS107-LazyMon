@@ -16,11 +16,13 @@ public class ICMonChainedEvent extends ICMonEvent{
         onStart(new StartEventAction(initialEvent));
         chainEvents();
     }
+
+
     private void chainEvents(){
         initialEvent.onComplete(new StartEventAction(this.chain.get(0)));
         for(int i = 1; i < chain.size(); i++){
             chain.get(i-1).onComplete(new StartEventAction(chain.get(i)));
         }
-        chain.getLast().onComplete(new CompleteEventAction(this));
+        chain.get(chain.size()-1).onComplete(new CompleteEventAction(this));
     }
 }
