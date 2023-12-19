@@ -18,7 +18,7 @@ public class SleepAction implements ICMonFightAction {
 
     @Override
     public boolean doAction(Pokemon target) {
-        this.user.heal(15);
+        this.user.heal(20);
         return true;
     }
 }
