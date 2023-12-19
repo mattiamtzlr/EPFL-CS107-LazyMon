@@ -20,12 +20,10 @@ public class PokemonSelectionEvent extends ICMonEvent implements ICMonInteractio
     public PokemonSelectionEvent(ICMon.ICMonGameState state, ICMonFightableActor foe,
                                  PokemonSelectionMenu selectionMenu,
                                  ICMon.ICMonEventManager eventManager) {
+        super(eventManager);
         this.selectionMenu = selectionMenu;
         this.state = state;
         this.foe = foe;
-
-        onStart(new RegisterEventAction(this, eventManager));
-        onComplete(new UnRegisterEventAction(this, eventManager));
     }
 
     @Override

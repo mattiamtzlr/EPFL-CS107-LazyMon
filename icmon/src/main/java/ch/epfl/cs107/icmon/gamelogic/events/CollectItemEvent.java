@@ -15,11 +15,10 @@ public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisi
     private ICMonItem item;
 
     public CollectItemEvent(ICMon.ICMonGameState state, ICMonItem item, ICMon.ICMonEventManager eventManager) {
+        super(eventManager);
         this.state = state;
         this.item = item;
-        this.onStart(new RegisterEventAction(this, eventManager));
         this.onStart(new LogAction("Hi, try to pick up the ICBall using \"F\""));
-        this.onComplete(new UnRegisterEventAction(this, eventManager));//
     }
 
     @Override

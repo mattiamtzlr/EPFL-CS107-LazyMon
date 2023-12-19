@@ -18,10 +18,9 @@ public class EndOfGameEvent extends ICMonEvent implements ICMonInteractionVisito
     }
 
     public EndOfGameEvent(ICMon.ICMonGameState state, ICMon.ICMonEventManager eventManager) {
+        super(eventManager);
         this.state = state;
-        this.onStart(new RegisterEventAction(this, eventManager));
         this.onStart(new LogAction("now try to talk to the person over there ->"));
-        this.onComplete(new UnRegisterEventAction(this, eventManager));
         this.onComplete(new LogAction("done:)"));
     }
 

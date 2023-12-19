@@ -4,6 +4,8 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.engine.Updatable;
@@ -20,7 +22,9 @@ public class ICMonEvent implements Updatable {
     private ArrayList<Action> suspendActions = new ArrayList<>();
     private ArrayList<Action> resumeActions = new ArrayList<>();
 
-    public ICMonEvent() {
+    public ICMonEvent(ICMon.ICMonEventManager eventManager) {
+        onStart(new RegisterEventAction(this, eventManager));
+        onComplete(new UnRegisterEventAction(this, eventManager));
         //onSuspension(new LogAction("suspended: " + this));
         //onResume(new LogAction("resumed: " + this));
     }

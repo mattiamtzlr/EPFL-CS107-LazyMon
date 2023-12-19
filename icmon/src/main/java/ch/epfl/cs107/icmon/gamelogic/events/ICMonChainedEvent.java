@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
 
@@ -10,7 +11,8 @@ public class ICMonChainedEvent extends ICMonEvent{
     private final ArrayList<ICMonEvent> chain = new ArrayList<>();
     private final ICMonEvent initialEvent;
 
-    public ICMonChainedEvent(ICMonEvent initialEvent, ICMonEvent... chain) {
+    public ICMonChainedEvent(ICMonEvent initialEvent,ICMon.ICMonEventManager eventManager, ICMonEvent... chain) {
+        super(eventManager);
         this.chain.addAll(Arrays.asList(chain));
         this.initialEvent = initialEvent;
         onStart(new StartEventAction(initialEvent));
