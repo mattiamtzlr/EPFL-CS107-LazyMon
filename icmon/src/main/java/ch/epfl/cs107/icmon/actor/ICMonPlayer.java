@@ -41,15 +41,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
-        /*addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Tentacool(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));*/
+//        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Tentacool(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Squirtle(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Snorlax(getOwnerArea(), getCurrentMainCellCoordinates()));
 
         setCurrentAnimation(animationLand);
     }

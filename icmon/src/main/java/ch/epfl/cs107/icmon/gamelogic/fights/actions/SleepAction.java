@@ -3,23 +3,22 @@ package ch.epfl.cs107.icmon.gamelogic.fights.actions;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
-public class ShockAction implements ICMonFightAction {
-    // does a lot of damage, but leaves the pokemon too tired to fight the next round.
+public class SleepAction implements ICMonFightAction {
+    // regenerates Pokemon 15 hp points
     private Pokemon user;
 
-    public ShockAction(Pokemon user) {
+    public SleepAction(Pokemon user) {
         this.user = user;
     }
 
     @Override
     public String name() {
-        return "Shock";
+        return "Sleep";
     }
 
     @Override
     public boolean doAction(Pokemon target) {
-        target.sufferDamage(40);
-        this.user.setTired(true);
+        this.user.heal(15);
         return true;
     }
 }

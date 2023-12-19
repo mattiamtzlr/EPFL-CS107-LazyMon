@@ -28,6 +28,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     private String name;
     private boolean alive = true;
+    private boolean onFire = false;
+    private boolean tired = false;
     private int hp;
     private int maxHp;
     private int damage;
@@ -58,13 +60,25 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         return super.takeCellSpace();
     }
 
-    public void sufferDamage(double amount) {
+    public void sufferDamage(int amount) {
         if (hp >= amount)
             hp -= amount;
         else {
             this.alive = false;
             this.hp = 0;
         }
+    }
+
+    public void heal(int amount) {
+        this.hp = amount <= this.maxHp ? (int) (this.hp + amount) : this.maxHp;
+    }
+
+    public void setOnFire() {
+        this.onFire = true;
+    }
+
+    public void setTired(boolean tired) {
+        this.tired = tired;
     }
 
     public ArrayList<ICMonFightAction> getFightActions() {
@@ -118,6 +132,21 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         public boolean isAlive() {
             return Pokemon.this.alive;
         }
-    }
+        public boolean isOnFire() {
+            return Pokemon.this.onFire;
+        }
 
+        public boolean isTired() {
+            return Pokemon.this.tired;
+        }
+
+        /**
+         * Calculates, how likely an enemy pokémon is to escape the fight, by taking the complement of its hp divided
+         * by its max-hp.
+         * @return percentage between 0 and 1 inclusive.
+         */
+        public double escapeProbability() {
+            return 1 - this.hp() / this.maxHp();
+        }
+    }
 }
