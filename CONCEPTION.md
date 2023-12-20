@@ -35,7 +35,7 @@
 - the AttackAction is named "Tackle" instead of "Attack"
 
 ## Extensions
-- Added various new Pokemon sprites and corresponding classes:
+- Added various new Pokemon sprites and corresponding classes, the sprites for these pokémon were taken from [Bulbapedia](https://bulbapedia.bulbagarden.net/):
   - Voltball
   - Enton
   - Gengar
