@@ -41,7 +41,7 @@
   - Gengar
   - Enton
   - Pikachu
-  - Tentacool
+  - Tentacruel
   - Charizard
   - Squirtle
   - Snorlax
