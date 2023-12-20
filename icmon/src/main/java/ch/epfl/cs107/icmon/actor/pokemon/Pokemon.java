@@ -70,7 +70,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     }
 
     public void heal(int amount) {
-        this.hp = amount <= this.maxHp ? (int) (this.hp + amount) : this.maxHp;
+        this.hp = Math.min(this.hp + amount, this.maxHp);
     }
 
     public void setOnFire() {
