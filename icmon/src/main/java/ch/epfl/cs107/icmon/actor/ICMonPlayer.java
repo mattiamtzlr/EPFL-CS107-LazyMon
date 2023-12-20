@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.messages.IndependentDialogMessage;
@@ -41,7 +42,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
-//        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
@@ -176,6 +177,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
             }
         }
+
+        @Override
+        public void interactWith(Garry garry, boolean isCellInteraction) {
+            if (!isCellInteraction) {
+                if (!pokemonCollection.isEmpty())
+                    garry.fight(pokemonCollection.get(0), state);
+                else if (!isDisplacementOccurs()) {
+                    openDialog(new Dialog("no_pokemon"));
+                }
+            }
+        }
+
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if(!isCellInteraction){

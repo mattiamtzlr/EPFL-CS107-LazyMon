@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
 import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
@@ -25,7 +26,6 @@ public class Town extends ICMonArea {
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
-        registerActor(new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(10, 11)));
         registerActor(new Door(
                 "lab",
                 new DiscreteCoordinates(6, 2),
@@ -44,9 +44,13 @@ public class Town extends ICMonArea {
                 this,
                 new DiscreteCoordinates(7, 27)
         ));
-
+        registerActor(new Door(
+                "shop",
+                new DiscreteCoordinates(3,2),
+                this,
+                new DiscreteCoordinates(25, 20)
+        ));
         registerActor(new Pikachu(this, new DiscreteCoordinates(11, 3)));
-        registerActor(new Voltball(this, new DiscreteCoordinates(23, 23)));
     }
 
     @Override

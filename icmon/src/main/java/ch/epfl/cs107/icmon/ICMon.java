@@ -4,12 +4,10 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonArea;
-import ch.epfl.cs107.icmon.area.maps.Arena;
-import ch.epfl.cs107.icmon.area.maps.House;
-import ch.epfl.cs107.icmon.area.maps.Lab;
-import ch.epfl.cs107.icmon.area.maps.Town;
+import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
@@ -52,6 +50,7 @@ public class ICMon extends AreaGame {
         registerArea(new Lab());
         registerArea(new Arena());
         registerArea(new House());
+        registerArea(new Shop());
     }
     private void createPokemon() {
         this.pokedex.put("bulbasaur", new Bulbasaur(getCurrentArea(), new DiscreteCoordinates(0,0)));
@@ -197,7 +196,12 @@ public class ICMon extends AreaGame {
         }
 
         public void startFightEvent(int choice, ICMonFightableActor foe){
-            ICMonFight combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
+             ICMonFight combat;
+             if (foe instanceof Garry)
+                 combat = new ICMonFight(player.getPokemons().get(choice), ((Garry) foe).getPokemon());
+             else
+                 combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
+
             PokemonFightEvent fightEvent = new PokemonFightEvent(gameState, combat, eventManager);
             fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
             send(new SuspendWithEventMessage(fightEvent));

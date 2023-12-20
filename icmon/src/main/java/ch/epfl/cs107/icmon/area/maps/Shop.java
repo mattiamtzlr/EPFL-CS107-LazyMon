@@ -1,38 +1,41 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.Door;
-import ch.epfl.cs107.icmon.actor.npc.Garry;
-import ch.epfl.cs107.icmon.actor.pokemon.*;
+import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Orientation;
 
-public class Arena extends ICMonArea {
+public class Shop extends ICMonArea {
     @Override
     public String getTitle() {
-        return "arena";
+        return "shop";
     }
 
     @Override
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
+        registerActor(new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(4, 5)));
         registerActor(new Door(
                 "town",
-                new DiscreteCoordinates(15,23),
+                new DiscreteCoordinates(25,  19),
                 this,
-                new DiscreteCoordinates(4,1),
-                new DiscreteCoordinates(5,1)));
+                new DiscreteCoordinates(3, 1),
+                new DiscreteCoordinates(4, 1)
+        ));
+    }
 
-        registerActor(new Garry(this, new DiscreteCoordinates(3, 6)));
-        //registerActor(new Enton(this, new DiscreteCoordinates(2, 6)));
-        //registerActor(new Gengar(this, new DiscreteCoordinates(3, 5)));
-        //registerActor(new Kadabra(this, new DiscreteCoordinates(4, 6)));
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
     }
 
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(4,2);
+        return new DiscreteCoordinates(5,5);
     }
 }

@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.ICMon;
+import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbasaur;
 import ch.epfl.cs107.icmon.gamelogic.actions.GivePokemonAction;
@@ -14,7 +15,6 @@ public class FirstInteractionWithProfessorOakEvent extends ICMonEvent implements
     public FirstInteractionWithProfessorOakEvent(ICMon.ICMonEventManager eventManager, ICMon.ICMonGameState state) {
         super(eventManager);
         this.state = state;
-        this.onStart(new OpenDialogAction(state, new Dialog("first_interaction_with_oak_event_icshopassistant")));
         this.dialog = new Dialog("first_interaction_with_prof_oak");
     }
     @Override
@@ -22,6 +22,10 @@ public class FirstInteractionWithProfessorOakEvent extends ICMonEvent implements
         this.state.openDialog(dialog);
     }
 
+    @Override
+    public void interactWith(ICShopAssistant assistant, boolean isCellinteraction){
+        this.state.openDialog(new Dialog("first_interaction_with_oak_event_icshopassistant"));
+    }
     @Override
     public void update(float deltaTime) {
         if(dialog.isCompleted())
