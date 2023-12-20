@@ -17,6 +17,7 @@ import java.util.Random;
 
 public class Garry extends NPCActor implements ICMonFightableActor {
     private OrientedAnimation animation;
+    public boolean defeated = false;
     private Random random = new Random();
     private int ANIMATION_DURATION = 6;
     private ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
@@ -27,9 +28,17 @@ public class Garry extends NPCActor implements ICMonFightableActor {
 
     }
 
+    public boolean isDefeated() {
+        return defeated;
+    }
+
+    public void setDefeated(boolean defeated) {
+        this.defeated = defeated;
+    }
+
     @Override
     public void fight(ICMonFightableActor foe, ICMon.ICMonGameState state) {
-        state.startSelectionEvent(this);
+        state.startSelection(this);
     }
     public Pokemon getPokemon(){
         return pokemonCollection.get(0);

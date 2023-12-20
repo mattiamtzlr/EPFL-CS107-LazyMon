@@ -3,10 +3,7 @@ package ch.epfl.cs107.icmon.actor.pokemon;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
-import ch.epfl.cs107.icmon.graphics.PokemonSelectionMenu;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -91,7 +88,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     @Override
     public void fight(ICMonFightableActor foe, ICMon.ICMonGameState state) {
-        state.startSelectionEvent(foe);
+        state.startSelection(foe);
     }
 
     @Override

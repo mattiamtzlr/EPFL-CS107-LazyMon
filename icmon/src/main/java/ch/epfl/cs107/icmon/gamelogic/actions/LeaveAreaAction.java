@@ -13,7 +13,12 @@ public class LeaveAreaAction implements Action {
 
     @Override
     public void perform() {
-        if (actor instanceof Pokemon || ((actor instanceof Garry) && !((Garry) actor).getPokemon().properties().isAlive()))
+        if (actor instanceof Garry && !((Garry) actor).getPokemon().properties().isAlive()) {
             actor.leaveArea();
+            ((Garry) actor).setDefeated(true);
+        } else if (actor instanceof Pokemon) {
+            actor.leaveArea();
+
+        }
     }
 }

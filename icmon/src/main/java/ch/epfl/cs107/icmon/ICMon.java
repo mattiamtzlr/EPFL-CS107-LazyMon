@@ -140,6 +140,7 @@ public class ICMon extends AreaGame {
                 new IntroductionEvent(eventManager, gameState),
                 new FirstInteractionWithProfessorOakEvent(eventManager, gameState),
                 collectItemEvent,
+                new FirstInteractionWithGarryEvent(eventManager, gameState),
                 new EndBossEvent(eventManager, gameState)
                 );
         chain.start();
@@ -173,7 +174,9 @@ public class ICMon extends AreaGame {
         public void givePlayerPokemon(String pokemonName) {
             openDialog(new Dialog("received_new_pokemon"));
             player.addPokemon(pokedex.get(pokemonName));
-            player.addPokemon(pokedex.get("voltball"));
+        }
+        public boolean playerHasPokemon(){
+            return player.hasPokemon();
         }
         public void send(GamePlayMessage message) {
             mailbox = message;
@@ -188,7 +191,7 @@ public class ICMon extends AreaGame {
             player.enterArea(areas.get(targetAreaKey), targetCoords);
         }
 
-        public void startSelectionEvent(ICMonFightableActor foe) {
+        public void startSelection(ICMonFightableActor foe) {
              PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getCurrentArea().getKeyboard());
              PokemonSelectionEvent selectionEvent =
                      new PokemonSelectionEvent(gameState, foe, selectionMenu,  eventManager);

@@ -2,10 +2,8 @@ package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
-import ch.epfl.cs107.icmon.gamelogic.messages.IndependentDialogMessage;
 import ch.epfl.cs107.icmon.gamelogic.messages.PassDoorMessage;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -42,7 +40,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
-        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
@@ -94,6 +92,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
     }
 
+    public boolean hasPokemon(){
+        return !pokemonCollection.isEmpty();
+    }
     public void openDialog(Dialog dialog) {
         this.dialog = dialog;
         setDialogState(true);
@@ -178,7 +179,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
-        @Override
+        /*@Override
         public void interactWith(Garry garry, boolean isCellInteraction) {
             if (!isCellInteraction) {
                 if (!pokemonCollection.isEmpty())
@@ -187,7 +188,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     openDialog(new Dialog("no_pokemon"));
                 }
             }
-        }
+        }*/
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
