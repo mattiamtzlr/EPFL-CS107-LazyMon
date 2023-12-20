@@ -7,7 +7,7 @@ public class AttackAction implements ICMonFightAction {
     private int damage;
     @Override
     public String name() {
-        return "Attack";
+        return "Tackle";
     }
 
     public AttackAction(int damage) {

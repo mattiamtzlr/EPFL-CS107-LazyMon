@@ -32,6 +32,7 @@
 - Reversed the roles of the player and the opponent pokemon in the fight graphics, to better fit the original style of Pokémon.
   - There are also small pauses between attacks.
 - Changed some of the resource files inside the dialogs directory to improve immersion :)
+- the AttackAction is named "Tackle" instead of "Attack"
 
 ## Extensions
 - Added various new Pokemon sprites and corresponding classes:
