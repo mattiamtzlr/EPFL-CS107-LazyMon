@@ -40,7 +40,6 @@ public class ICMon extends AreaGame {
     private ArrayList<ICMonEvent> activeEvents;
     private ArrayList<ICMonEvent> newEvents;
     private ArrayList<ICMonEvent> completedEvents;
-    // private final String[] areas = {"town"};
     private final HashMap<String, ICMonArea> areas = new HashMap<>();
     private GamePlayMessage mailbox;
 

@@ -187,7 +187,7 @@ public class ICMonFight extends PauseMenu {
 
                     ICMonFightAction nextAction = null;
                     // if escapeProbability is great enough and in one out of 4 times the foe will flee.
-                    if (foe.properties().escapeProbability() > 0.7 && random.nextInt(0, 11) <= 2)
+                    if (foe.properties().escapeProbability() > 0.8 && random.nextInt(0, 11) <= 2)
                         nextAction = new EscapeAction(); // every pokémon has an escape action
                     else {
                         while (nextAction == null) {

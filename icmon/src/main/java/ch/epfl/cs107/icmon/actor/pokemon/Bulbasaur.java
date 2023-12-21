@@ -15,7 +15,7 @@ public class Bulbasaur extends Pokemon{
      * @param position Position at which this Bulbasaur lives. (DiscreteCoordinates)
      */
     public Bulbasaur(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "bulbasaur", 20, 60,
+        super(ownerArea, position, "bulbasaur", 12, 60,
             new EscapeAction());
 
         this.addFightAction(new AttackAction(this.properties().damage()), 0);

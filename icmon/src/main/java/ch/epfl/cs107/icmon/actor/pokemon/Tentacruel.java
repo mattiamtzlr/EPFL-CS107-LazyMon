@@ -12,7 +12,7 @@ public class Tentacruel extends Pokemon {
      * @param position Position at which this Tentacruel lives. (DiscreteCoordinates)
      */
     public Tentacruel(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "tentacool", 8, 65, new EscapeAction());
+        super(ownerArea, position, "tentacruel", 8, 65, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()));
     }
 }

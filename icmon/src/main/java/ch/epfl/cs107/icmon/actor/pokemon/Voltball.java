@@ -12,7 +12,7 @@ public class Voltball extends Pokemon {
      * @param position Position at which this Voltball lives. (DiscreteCoordinates)
      */
     public Voltball(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "voltball", 8, 60,
+        super(ownerArea, position, "voltball", 10, 60,
                 new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
     }
