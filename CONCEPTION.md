@@ -57,3 +57,7 @@
   - OpenDialogAction
 - Created classes for messages inside the package "gamelogic/messages" to fit our needs:
   - IndependentDialogMessage
+
+## Remarks
+We decided not to write JavaDoc for trivial methods such as some getters and setters as well as for most
+overridden methods as they have JavaDoc in their super methods.

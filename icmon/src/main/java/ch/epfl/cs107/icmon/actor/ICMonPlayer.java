@@ -31,6 +31,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final OrientedAnimation animationWater;
     private Dialog dialog;
     private boolean inDialog;
+    private boolean surf;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
     private final ICMonPlayerInteractionHandler handler;
     private final ICMon.ICMonGameState state;
@@ -53,6 +54,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         /*========================================================================================
          #    The following lines can be uncommented, to test all Pokémon and their features.    #
+         #    The uncommented Pokémon get added to the player's Pokémon collection.              #
          ========================================================================================*/
 
 //        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
@@ -79,6 +81,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 dialog.update(deltaTime);
             setDialogState(!dialog.isCompleted());
         }
+
         else {
             moveIfPressed(Orientation.LEFT, new Button[]{keyboard.get(Keyboard.LEFT), keyboard.get(Keyboard.A)});
             moveIfPressed(Orientation.UP, new Button[]{keyboard.get(Keyboard.UP), keyboard.get(Keyboard.W)});
@@ -142,6 +145,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      */
     public void addPokemon(Pokemon pokemon) {
         this.pokemonCollection.add(pokemon);
+        if (pokemon instanceof Voltball) {
+            setSurf();
+        }
     }
 
     /**
@@ -194,20 +200,19 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
 
     /**
+     * Sets the player's <code>surf</code> attribute to true.
+     */
+    private void setSurf() {
+        this.surf = true;
+    }
+
+    /**
      * Returns if the player has the ability to swim - "surf" in the original games - which currently only depends on if
      * they have a Voltball Pokémon in their collection.
-     * @return True if the player has a Voltball Pokémon. (boolean)
+     * @return True if the player has a the surf ability. (boolean)
      */
     public boolean hasSurf() {
-    // TODO this is w.i.p.
-        boolean surf = false;
-        for (Pokemon pokemon : pokemonCollection) {
-            if (pokemon instanceof Voltball) {
-                surf = true;
-                break;
-            }
-        }
-        return surf;
+        return this.surf;
     }
 
     @Override
@@ -232,18 +237,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
             }
         }
-
-        // TODO (Leo): can this be deleted?
-        /*@Override
-        public void interactWith(Garry garry, boolean isCellInteraction) {
-            if (!isCellInteraction) {
-                if (!pokemonCollection.isEmpty())
-                    garry.fight(pokemonCollection.get(0), state);
-                else if (!isDisplacementOccurs()) {
-                    openDialog(new Dialog("no_pokemon"));
-                }
-            }
-        }*/
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
