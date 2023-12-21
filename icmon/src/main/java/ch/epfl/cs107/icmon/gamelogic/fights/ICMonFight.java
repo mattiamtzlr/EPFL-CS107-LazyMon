@@ -11,8 +11,10 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.Random;
 
-
 public class ICMonFight extends PauseMenu {
+    /**
+     * The different states for the finite state machine. States are also used to transfer information between states.
+     */
     private enum ICMonFightState {
         INTRODUCTION,
         ACTION_SELECTION,
@@ -31,18 +33,26 @@ public class ICMonFight extends PauseMenu {
 
         ICMonFightState() {}
     }
-    private Pokemon player;
-    private Pokemon foe;
-    private ICMonFightArenaGraphics arena;
+    private final Pokemon player;
+    private final Pokemon foe;
+    private final ICMonFightArenaGraphics arena;
     private boolean running = true;
     private ICMonFightState currentState;
     private double counter = 1.5f;
-    private Random random = new Random();
+    private static final Random random = new Random();
 
+    /**
+     * Utility function to reset the counter to its default value.
+     */
     private void resetCounter() {
         this.counter = 1.5f;
     }
 
+    /**
+     * A pause menu, which is used to represent a fight between two Pokémon.
+     * @param player The Pokémon which initiated the fight, will be drawn in the front. (Pokemon)
+     * @param foe The Pokémon which is fought, will be drawn in the back, facing the player. (Pokemon)
+     */
     public ICMonFight(Pokemon player, Pokemon foe) {
         this.player = player;
         this.foe = foe;
@@ -55,6 +65,28 @@ public class ICMonFight extends PauseMenu {
         arena.draw(c);
     }
 
+    /**
+     * Simulates the finite state machine following this general schema:
+     * <ul>
+     *     <li>A short introductory text is displayed, the player presses space-bar.</li>
+     *     <li>The player selects their action (if their Pokémon is not tired)</li>
+     *     <li>The player executes his action after a small pause:</li>
+     *     <ul>
+     *         <li>If the action is an escape action, the conclusion state gets chosen and the fight is over.</li>
+     *         <li>If the action results in the foe dying, the conclusion state gets chosen and the fight is over.</li>
+     *         <li>Otherwise it is the turn of the foe.</li>
+     *     </ul>
+     *     <li>The foe choses an action and random and performs it after a small pause:</li>
+     *     <ul>
+     *         <li>If the action is an escape action, the conclusion state gets chosen and the fight is over.</li>
+     *         <li>If the action results in the player dying, the conclusion state gets chosen and the fight is over.</li>
+     *         <li>Otherwise it is again the turn of the player.</li>
+     *     </ul>
+     *     <li>Before the conclusion state gets evaluated, the screen is updated a last time (DRAW_LAST_FRAME).</li>
+     * </ul>
+     * The pauses are used to make the fight a bit more immersive.
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         Keyboard keyboard = getKeyboard();

@@ -1,7 +1,6 @@
 package ch.epfl.cs107.icmon.graphics;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.engine.Updatable;
 import ch.epfl.cs107.play.engine.actor.Graphics;
 import ch.epfl.cs107.play.engine.actor.GraphicsEntity;
@@ -33,6 +32,12 @@ public class PokemonSelectionMenuGraphics extends ICMonFightInteractionGraphics 
     private int choice = -1;
     private int currentChoice;
 
+    /**
+     * Constructs a new Graphics element for the selection menu, this code closely follows <code>ICMonFightActionSelectionGraphics.java</code>
+     * @param scaleFactor The scale factor to use for the menu. (float)
+     * @param keyboard The keyboard to use for the input. (Keyboard)
+     * @param playerPokemons The Pokémon collection from which to choose. (ArrayList&lt;Pokemon&gt;)
+     */
     public PokemonSelectionMenuGraphics(float scaleFactor, Keyboard keyboard, ArrayList<Pokemon> playerPokemons) {
         super(scaleFactor);
         this.scaleFactor = scaleFactor;
@@ -99,6 +104,10 @@ public class PokemonSelectionMenuGraphics extends ICMonFightInteractionGraphics 
                 selector.draw(canvas);
     }
 
+    /**
+     * Returns the index of the chosen Pokémon.
+     * @return Index (int)
+     */
     public int choice() {
         return choice;
     }

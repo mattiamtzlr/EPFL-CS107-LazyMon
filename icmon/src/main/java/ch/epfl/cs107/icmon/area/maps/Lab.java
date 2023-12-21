@@ -8,6 +8,9 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
+/**
+ * Area for the Lab of Professor Oak.
+ */
 public class Lab extends ICMonArea {
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
@@ -26,11 +29,6 @@ public class Lab extends ICMonArea {
                 new DiscreteCoordinates(6, 1),
                 new DiscreteCoordinates(7, 1)
         ));
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
     }
 
     @Override

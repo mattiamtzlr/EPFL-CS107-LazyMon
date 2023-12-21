@@ -6,11 +6,14 @@ import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
+/**
+ * Area for the House of the player.
+ */
 public class House extends ICMonArea {
 
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(3, 2);
+        return new DiscreteCoordinates(5, 6);
     }
 
     @Override
@@ -24,11 +27,6 @@ public class House extends ICMonArea {
                 new DiscreteCoordinates(3, 1),
                 new DiscreteCoordinates(4, 1)
         ));
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
     }
 
     @Override

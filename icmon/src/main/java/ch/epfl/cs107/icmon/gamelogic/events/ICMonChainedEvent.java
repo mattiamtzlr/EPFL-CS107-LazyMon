@@ -12,6 +12,13 @@ public class ICMonChainedEvent extends ICMonEvent implements ICMonInteractionVis
     private final ArrayList<ICMonEvent> chain = new ArrayList<>();
     private final ICMonEvent initialEvent;
 
+    /**
+     * Generic chained event. Contains a collection of events of which every event starts the next event on completion.
+     * TODO: Maybe use a linked list? seems fitting
+     * @param eventManager The event manager of the game. (ICMon.ICMonEventManager)
+     * @param initialEvent The first event in the chain. (ICMonEvent)
+     * @param chain All the other events (ICMonEvent...)
+     */
     public ICMonChainedEvent(ICMon.ICMonEventManager eventManager, ICMonEvent initialEvent, ICMonEvent... chain) {
         super(eventManager);
         this.chain.addAll(Arrays.asList(chain));
@@ -20,7 +27,10 @@ public class ICMonChainedEvent extends ICMonEvent implements ICMonInteractionVis
         chainEvents();
     }
 
-
+    /**
+     * Chains the events together by looping through the list and adding a StartEventAction containing the next event to every
+     * event's completion-action list.
+     */
     private void chainEvents(){
         initialEvent.onComplete(new StartEventAction(this.chain.get(0)));
         for(int i = 1; i < chain.size(); i++){

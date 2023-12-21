@@ -9,9 +9,15 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisitor {
-    private ICMon.ICMonGameState state;
-    private ICMonItem item;
+    private final ICMon.ICMonGameState state;
+    private final ICMonItem item;
 
+    /**
+     * This event prompts the player to pick up a Pokéball which contains the starter Pokémon Bulbasaur.
+     * @param state The game's state. (ICMon.ICMonGameState)
+     * @param item The item to be collected. (ICMonItem)
+     * @param eventManager The event manager of the game. (ICMon.ICMonEventManager)
+     */
     public CollectItemEvent(ICMon.ICMonGameState state, ICMonItem item, ICMon.ICMonEventManager eventManager) {
         super(eventManager);
         this.state = state;

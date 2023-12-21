@@ -3,14 +3,19 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
-import ch.epfl.cs107.icmon.actor.npc.NPCActor;
 import ch.epfl.cs107.icmon.gamelogic.actions.GivePokemonAction;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class FirstInteractionWithGarryEvent extends ICMonEvent implements ICMonInteractionVisitor {
-    private ICMon.ICMonGameState state;
+    private final ICMon.ICMonGameState state;
     private Garry garry;
+
+    /**
+     * This event prompts the player to fight Garry and ensures correct handling of the interaction with Garry.
+     * @param eventManager The event manager of the game. (ICMon.ICMonEventManager)
+     * @param state The game's state. (ICMon.ICMonGameState)
+     */
     public FirstInteractionWithGarryEvent(ICMon.ICMonEventManager eventManager, ICMon.ICMonGameState state) {
         super(eventManager);
         this.state = state;
@@ -22,6 +27,7 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent implements ICMonI
         state.openDialog(new Dialog("go_fight_garry"));
     }
 
+    @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
         this.garry = garry;
         if (state.playerHasPokemon()) {

@@ -6,7 +6,12 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 
 public class LeaveAreaAction implements Action {
 
-    private ICMonActor actor;
+    private final ICMonActor actor;
+
+    /**
+     * Makes the given actor leave its current area: Pokémon will always leave, Garry will only leave if he has been defeated.
+     * @param actor The actor to make leave. (ICMonActor)
+     */
     public LeaveAreaAction(ICMonActor actor) {
         this.actor = actor;
     }

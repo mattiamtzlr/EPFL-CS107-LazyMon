@@ -3,6 +3,9 @@ package ch.epfl.cs107.icmon.gamelogic.fights.actions;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
+/**
+ * This action sets the target "on fire", which causes it to take a bit of damage every following round.
+ */
 public class FireAction implements ICMonFightAction {
     // sets target on fire, which causes it to take damage every following round.
 

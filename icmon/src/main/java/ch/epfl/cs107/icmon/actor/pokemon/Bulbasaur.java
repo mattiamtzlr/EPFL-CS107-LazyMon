@@ -9,6 +9,11 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import java.util.ArrayList;
 
 public class Bulbasaur extends Pokemon{
+    /**
+     * Constructor for Bulbasaur, passes everything to super().
+     * @param ownerArea Area which this Bulbasaur belongs to. (Area)
+     * @param position Position at which this Bulbasaur lives. (DiscreteCoordinates)
+     */
     public Bulbasaur(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "bulbasaur", 20, 60,
             new EscapeAction());

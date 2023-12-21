@@ -9,6 +9,10 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
+
+/**
+ * Area for the Shop.
+ */
 public class Shop extends ICMonArea {
     @Override
     public String getTitle() {
@@ -27,11 +31,6 @@ public class Shop extends ICMonArea {
                 new DiscreteCoordinates(3, 1),
                 new DiscreteCoordinates(4, 1)
         ));
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
     }
 
     @Override

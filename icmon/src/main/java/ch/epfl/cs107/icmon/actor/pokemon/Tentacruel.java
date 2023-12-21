@@ -5,8 +5,13 @@ import ch.epfl.cs107.icmon.gamelogic.fights.actions.EscapeAction;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class Tentacool extends Pokemon {
-    public Tentacool(Area ownerArea, DiscreteCoordinates position) {
+public class Tentacruel extends Pokemon {
+    /**
+     * Constructor for Tentacruel, passes everything to super().
+     * @param ownerArea Area which this Tentacruel belongs to. (Area)
+     * @param position Position at which this Tentacruel lives. (DiscreteCoordinates)
+     */
+    public Tentacruel(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "tentacool", 8, 65, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()));
     }

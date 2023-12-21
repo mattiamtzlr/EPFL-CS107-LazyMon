@@ -7,6 +7,14 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class ProfOak extends NPCActor {
+    
+    /**
+     * Constructor for the NPC Professor Oak.
+     * Will always be created with the same sprite.
+     * @param owner The area Professor Oak belongs to. (Area)
+     * @param orientation The orientation with which Professor Oak should be rendered. (Orientation)
+     * @param position The position, where Professor Oak stands. (DiscreteCoordinates)
+     */
     public ProfOak(Area owner, Orientation orientation, DiscreteCoordinates position) {
         super(owner, orientation, position, "actors/prof-oak");
     }

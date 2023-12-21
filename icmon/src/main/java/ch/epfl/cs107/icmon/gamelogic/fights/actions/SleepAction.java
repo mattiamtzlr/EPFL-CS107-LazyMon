@@ -5,8 +5,12 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
 public class SleepAction implements ICMonFightAction {
     // regenerates Pokemon 15 hp points
-    private Pokemon user;
+    private final Pokemon user;
 
+    /**
+     * This action allows the Pokémon to regenerate 20 health points. No other attack is performed.
+     * @param user The Pokémon which uses this action; The one that regenerates. (Pokemon)
+     */
     public SleepAction(Pokemon user) {
         this.user = user;
     }

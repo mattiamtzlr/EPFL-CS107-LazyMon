@@ -1,16 +1,18 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.ICMon;
-import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 
 public class PokemonFightEvent extends ICMonEvent implements ICMonInteractionVisitor {
-    private ICMonFight combat;
-    public PokemonFightEvent(ICMon.ICMonGameState state, ICMonFight combat, ICMon.ICMonEventManager eventManager) {
+    private final ICMonFight combat;
+
+    /**
+     * This event invokes a new fight between Pokémon.
+     * @param combat The fight menu to be used. (ICMonFight)
+     * @param eventManager The event manager of the game. (ICMon.ICMonEventManager)
+     */
+    public PokemonFightEvent(ICMonFight combat, ICMon.ICMonEventManager eventManager) {
         super(eventManager);
         this.combat = combat;
     }
@@ -21,6 +23,7 @@ public class PokemonFightEvent extends ICMonEvent implements ICMonInteractionVis
             complete();
     }
 
+    @Override
     public ICMonFight getPauseMenu() {
         return combat;
     }

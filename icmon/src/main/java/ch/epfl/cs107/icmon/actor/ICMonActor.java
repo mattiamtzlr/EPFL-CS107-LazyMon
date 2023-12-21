@@ -15,14 +15,20 @@ public class ICMonActor extends MovableAreaEntity {
 
     /**
      * Default ICMon Actor
-     * @param owner The Area to which the actor belongs
-     * @param orientation orientation
-     * @param coordinates type: DiscreteCoordinates
+     * @param owner The Area to which the actor belongs. (Area)
+     * @param orientation The orientation with which this actor should be drawn. (Orientation)
+     * @param coordinates The coordinates at which this actor is placed. (DiscreteCoordinates)
      */
     public ICMonActor(Area owner, Orientation orientation, DiscreteCoordinates coordinates){
         super(owner, orientation, coordinates);
 
     }
+
+    /**
+     * Allows this actor to enter the specified area, at the specified coordinates.
+     * @param area The new area of the actor. (Area)
+     * @param position The new position of the actor. (DiscreteCoordinates)
+     */
     public void enterArea(Area area, DiscreteCoordinates position) {
         area.registerActor(this);
         area.setViewCandidate(this);
@@ -31,9 +37,13 @@ public class ICMonActor extends MovableAreaEntity {
         resetMotion();
     }
 
+    /**
+     * Allows this actor to leave its current area.
+     */
     public void leaveArea() {
         getOwnerArea().unregisterActor(this);
     }
+
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());

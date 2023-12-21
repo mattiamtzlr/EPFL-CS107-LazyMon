@@ -10,10 +10,15 @@ import ch.epfl.cs107.play.window.Keyboard;
 import java.util.ArrayList;
 
 public class PokemonSelectionMenu extends PauseMenu {
-    private PokemonSelectionMenuGraphics graphics;
+    private final PokemonSelectionMenuGraphics graphics;
     private boolean running = true;
     private int choice = -1;
 
+    /**
+     * Constructs a new pause menu which allows to select a Pokémon from the player's collection.
+     * @param pokemons The Pokémon collection from which to choose. (ArrayList&lt;Pokemon&gt;)
+     * @param keyboard The keyboard used for the input. (Keyboard)
+     */
     public PokemonSelectionMenu(ArrayList<Pokemon> pokemons, Keyboard keyboard) {
         this.graphics = new PokemonSelectionMenuGraphics(CAMERA_SCALE_FACTOR, keyboard, pokemons);
     }
@@ -34,10 +39,10 @@ public class PokemonSelectionMenu extends PauseMenu {
         graphics.draw(c);
     }
 
-    public boolean isRunning() {
-        return this.running;
-    }
-
+    /**
+     * Returns the index of the chosen Pokémon.
+     * @return Index (int)
+     */
     public int choice() {
         return choice;
     }

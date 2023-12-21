@@ -15,6 +15,12 @@ import java.util.List;
 public abstract class ICMonItem extends CollectableAreaEntity {
     private final Sprite sprite;
 
+    /** Constructor for every ICMonItem
+     *
+     * @param owner Area to which the Item belongs (Area)
+     * @param position Position at which the item should be rendered (DiscreteCoordinates)
+     * @param spriteName Name of the sprite in the resources/images/sprites/items directory (String)
+     */
     public ICMonItem(Area owner, DiscreteCoordinates position, String spriteName) {
         super(owner, Orientation.DOWN, position);
         this.sprite = new RPGSprite(spriteName, 1f, 1f, this);
@@ -31,12 +37,6 @@ public abstract class ICMonItem extends CollectableAreaEntity {
     }
 
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-
-    }
-
-    @Override
-
     public void draw(Canvas canvas) {
         this.sprite.draw(canvas);
     }

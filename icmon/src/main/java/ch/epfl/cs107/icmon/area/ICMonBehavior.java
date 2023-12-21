@@ -9,10 +9,10 @@ import ch.epfl.cs107.play.window.Window;
 
 public class ICMonBehavior extends AreaBehavior {
     /**
-     * Default ICMonBehavior Constructor
+     * ICMonBehavior Constructor
      *
-     * @param window (Window), not null
-     * @param name   (String): Name of the Behavior, not null
+     * @param window The current window. (Window)
+     * @param name Name of the corresponding behavior. (String)
      */
     public ICMonBehavior(Window window, String name) {
         super(window, name);
@@ -26,6 +26,9 @@ public class ICMonBehavior extends AreaBehavior {
         }
     }
 
+    /**
+     * Defines all possible walking types.
+     */
     public enum AllowedWalkingType {
         NONE,
         SURF,
@@ -33,6 +36,9 @@ public class ICMonBehavior extends AreaBehavior {
         ALL // all of the above
     }
 
+    /**
+     * All possible cell types. The <code>type</code> attribute is a signed 32-bit integer, which corresponds to an RGBA color.
+     */
     public enum ICMonCellType {
         NULL(0, AllowedWalkingType.NONE),
         WALL(-16777216, AllowedWalkingType.NONE),
@@ -67,12 +73,14 @@ public class ICMonBehavior extends AreaBehavior {
         }
     }
 
+    /**
+     * Cell class specific to this game.
+     */
     public class ICMonCell extends Cell{
         private final ICMonCellType type;
 
         /**
-         * Default ICMonCell Constructor
-         *
+         * ICMonCell Constructor
          * @param x    (int): x coordinate of the cell
          * @param y    (int): y coordinate of the cell
          * @param type (ICCellType), not null
@@ -93,14 +101,18 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-            if (this.getType().getWalkingType() == AllowedWalkingType.NONE) return false;
-            if (entity instanceof ICMonPlayer && this.getType().getWalkingType() == AllowedWalkingType.SURF){
+            if (this.getType().getWalkingType() == AllowedWalkingType.NONE)
+                return false;
+
+            if (entity instanceof ICMonPlayer && this.getType().getWalkingType() == AllowedWalkingType.SURF)
                 return ((ICMonPlayer) entity).hasSurf();
-            }
+
             if (!entity.takeCellSpace())
                 return true;
+
             for (Interactable entityInCell : entities)
-                if (entityInCell.takeCellSpace()) return false;
+                if (entityInCell.takeCellSpace())
+                    return false;
             return true;
         }
 

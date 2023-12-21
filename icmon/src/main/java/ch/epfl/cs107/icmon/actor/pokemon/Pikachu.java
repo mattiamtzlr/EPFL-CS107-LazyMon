@@ -7,6 +7,11 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Pikachu extends Pokemon{
+    /**
+     * Constructor for Pikachu, passes everything to super().
+     * @param ownerArea Area which this Pikachu belongs to. (Area)
+     * @param position Position at which this Pikachu lives. (DiscreteCoordinates)
+     */
     public Pikachu(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "pikachu", 9, 70,
                 new EscapeAction());

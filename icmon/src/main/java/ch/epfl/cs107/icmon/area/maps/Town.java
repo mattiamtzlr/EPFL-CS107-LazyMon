@@ -16,6 +16,9 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
+/**
+ * Area for the Town, the main area of the game.
+ */
 public class Town extends ICMonArea {
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
@@ -51,11 +54,6 @@ public class Town extends ICMonArea {
                 new DiscreteCoordinates(25, 20)
         ));
         registerActor(new Pikachu(this, new DiscreteCoordinates(11, 3)));
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
     }
 
     @Override

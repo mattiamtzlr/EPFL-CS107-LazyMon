@@ -22,31 +22,46 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The main character of the game.
+ */
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private OrientedAnimation currentAnimation;
-    private OrientedAnimation animationLand;
-    private OrientedAnimation animationWater;
+    private final OrientedAnimation animationLand;
+    private final OrientedAnimation animationWater;
     private Dialog dialog;
     private boolean inDialog;
     private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
-    private ICMonPlayerInteractionHandler handler;
-    private ICMon.ICMonGameState state;
-    private ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
+    private final ICMonPlayerInteractionHandler handler;
+    private final ICMon.ICMonGameState state;
+    private final ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
 
-    public ICMonPlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, ICMon.ICMonGameState state) {
-        super(owner, orientation, coordinates);
-        this.animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, orientation, this);
-        this.animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, orientation, this);
+    /**
+     * The constructor for the player, the main character. Two animations are initialised, one for movement on land and one
+     * for movement on / in water. The player gets initialised looking downwards, to look "at" the person who is playing.
+     * @param ownerArea The area that the player belongs to. (Area)
+     * @param coordinates The coordinates where the player is. (DiscreteCoordinates)
+     * @param state The game state to be used for this player. (ICMon.ICMonGameState)
+     */
+    public ICMonPlayer(Area ownerArea, DiscreteCoordinates coordinates, ICMon.ICMonGameState state) {
+        super(ownerArea, Orientation.DOWN, coordinates);
+        this.animationLand = new OrientedAnimation("actors/player", ANIMATION_DURATION / 2, Orientation.DOWN, this);
+        this.animationWater = new OrientedAnimation("actors/player_water", ANIMATION_DURATION / 2, Orientation.DOWN, this);
 
         this.handler = new ICMonPlayerInteractionHandler();
         this.state = state;
+
+        /*========================================================================================
+         #    The following lines can be uncommented, to test all Pokémon and their features.    #
+         ========================================================================================*/
+
 //        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
-//        addPokemon(new Tentacool(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Tentacruel(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
@@ -55,6 +70,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         setCurrentAnimation(animationLand);
     }
+
+    @Override
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         if (inDialog) {
@@ -74,11 +91,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             super.update(deltaTime);
         }
     }
+
     /**
      * Orientate and Move this player in the given orientation if the given button is down
-     *
-     * @param orientation (Orientation): given orientation, not null
-     * @param buttons (Button): list of buttons corresponding to the given orientation, not null
+     * @param orientation The new orientation (Orientation)
+     * @param buttons The list of buttons corresponding to the given orientation. (Button[])
      */
     private void moveIfPressed(Orientation orientation, Button[] buttons) {
         for (Button b : buttons) {
@@ -92,27 +109,55 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
     }
 
+    /**
+     * Returns, whether the player has any Pokémon in its collection. Note that this method doesn't check any properties of
+     * the Pokémon.
+     * @return True if there is at least one Pokémon in the player's collection. (boolean)
+     */
     public boolean hasPokemon(){
         return !pokemonCollection.isEmpty();
     }
+
+    /**
+     * Allows the preparation of player for a dialog. Sets the <code>inDialog</code> attribute to true and the
+     * <code>dialog</code> attribute to the given dialog.
+     * @param dialog The dialog to be used. (Dialog)
+     */
     public void openDialog(Dialog dialog) {
         this.dialog = dialog;
         setDialogState(true);
     }
 
+    /**
+     * Sets the <code>inDialog</code> attribute to the given value.
+     * @param dialogState The new value. (boolean)
+     */
     public void setDialogState(boolean dialogState) {
         this.inDialog = dialogState;
     }
 
+    /**
+     * Adds a Pokémon to the player's collection.
+     * @param pokemon The Pokémon to be added. (Pokemon)
+     */
     public void addPokemon(Pokemon pokemon) {
         this.pokemonCollection.add(pokemon);
     }
 
+    /**
+     * Returns a defensive copy of the player's Pokémon collection, to be used in Pokémon selection.
+     * @return Copy of the player's Pokémon collection. (Arraylist&lt;Pokemon&gt;)
+     */
     public ArrayList<Pokemon> getPokemons() {
         return new ArrayList<>(this.pokemonCollection);
     }
 
-    public void setCurrentAnimation(OrientedAnimation currentAnimation) {
+    /**
+     * Sets the orientation of the provided animation to the current orientation of the player (to avoid visual glitches)
+     * and then sets that animation as the current one.
+     * @param currentAnimation The new animation. (OrientedAnimation)
+     */
+    private void setCurrentAnimation(OrientedAnimation currentAnimation) {
         currentAnimation.orientate(this.getOrientation());
         this.currentAnimation = currentAnimation;
     }
@@ -148,18 +193,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         return true;
     }
 
-     public boolean hasSurf(){
-        // TODO this is w.i.p.
+    /**
+     * Returns if the player has the ability to swim - "surf" in the original games - which currently only depends on if
+     * they have a Voltball Pokémon in their collection.
+     * @return True if the player has a Voltball Pokémon. (boolean)
+     */
+    public boolean hasSurf() {
+    // TODO this is w.i.p.
         boolean surf = false;
-        for (Pokemon pokemon : pokemonCollection){
+        for (Pokemon pokemon : pokemonCollection) {
             if (pokemon instanceof Voltball) {
                 surf = true;
                 break;
             }
         }
         return surf;
-
     }
+
     @Override
     public void draw(Canvas canvas) {
         currentAnimation.draw(canvas);
@@ -167,6 +217,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             dialog.draw(canvas);
     }
 
+    /**
+     * Class which handles interactions between the player and other actors / cells.
+     * Implements the interactWith method from the ICMonInteractionVisitor interface.
+     */
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
@@ -179,6 +233,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
+        // TODO (Leo): can this be deleted?
         /*@Override
         public void interactWith(Garry garry, boolean isCellInteraction) {
             if (!isCellInteraction) {

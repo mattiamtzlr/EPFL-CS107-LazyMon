@@ -19,6 +19,14 @@ public class Door extends AreaEntity {
     private final DiscreteCoordinates mainCellCoords;
     private final ArrayList<DiscreteCoordinates> additionalCellCords;
 
+    /**
+     * Constructs a new Door (or rather a passage), which allows to pass from one area to another by walking "through" the
+     * door.
+     * @param destinationArea The <i>name</i> of the area to which the door <b>leads</b>. (String)
+     * @param destinationCoords The position, where the player should enter the <b>new</b> area. (DiscreteCoordinates)
+     * @param ownerArea The area, to which the door <b>belongs</b>. (Area)
+     * @param mainCellCoords The position, where the door is located in its owner area. (DiscreteCoordinates)
+     */
     public Door(String destinationArea, DiscreteCoordinates destinationCoords, Area ownerArea,
                 DiscreteCoordinates mainCellCoords) {
 
@@ -26,6 +34,15 @@ public class Door extends AreaEntity {
                 new DiscreteCoordinates[0]);
     }
 
+    /**
+     * Constructs a new Door (or rather a passage), which allows to pass from one area to another by walking "through" the
+     * door. The door can have multiple coordinates from which the player can walk through the door.
+     * @param destinationArea The <i>name</i> of the area to which the door <b>leads</b>. (String)
+     * @param destinationCoords The position, where the player should enter the <b>new</b> area. (DiscreteCoordinates)
+     * @param ownerArea The area, to which the door <b>belongs</b>. (Area)
+     * @param mainCellCoords The position, where the door is located in its owner area. (DiscreteCoordinates)
+     * @param additionalCellCoords More positions, where the door is also accessible from in its owner area. (DiscreteCoordinates...)
+     */
     public Door(String destinationArea, DiscreteCoordinates destinationCoords, Area ownerArea,
                 DiscreteCoordinates mainCellCoords, DiscreteCoordinates... additionalCellCoords) {
 
@@ -38,10 +55,18 @@ public class Door extends AreaEntity {
         this.additionalCellCords = new ArrayList<>(Arrays.asList(additionalCellCoords));
     }
 
+    /**
+     * Returns the area, to which this door leads.
+     * @return The <i>name</i> of the destination area. (String)
+     */
     public String getDestinationArea() {
         return this.destinationArea;
     }
 
+    /**
+     * Returns the coordinates, at which the player should be placed, when passing through this door.
+     * @return The main destination coordinates. (DiscreteCoordinates)
+     */
     public DiscreteCoordinates getDestinationCoords() {
         return this.destinationCoords;
     }

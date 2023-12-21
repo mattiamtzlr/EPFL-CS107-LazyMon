@@ -4,7 +4,12 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class IndependentDialogMessage extends GamePlayMessage{
-    private String path;
+    private final String path;
+
+    /**
+     * Allows a dialog to be opened without any additional conditions, thus independent.
+     * @param path The path to the xml file in resources/dialogs. (String)
+     */
     public IndependentDialogMessage(String path) {
         this.path = path;
     }

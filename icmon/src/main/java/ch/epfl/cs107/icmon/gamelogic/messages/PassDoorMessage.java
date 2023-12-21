@@ -4,8 +4,12 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.Door;
 
 public class PassDoorMessage extends GamePlayMessage{
-    private Door door;
+    private final Door door;
 
+    /**
+     * Allows the player to request the passage of a door.
+     * @param door The door which needs to be passed. (Door)
+     */
     public PassDoorMessage(Door door) {
         this.door = door;
     }
