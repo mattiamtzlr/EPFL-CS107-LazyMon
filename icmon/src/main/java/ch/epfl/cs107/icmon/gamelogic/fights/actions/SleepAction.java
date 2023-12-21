@@ -4,7 +4,7 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
 public class SleepAction implements ICMonFightAction {
-    // regenerates Pokemon 15 hp points
+    // regenerates Pokémon 15 hp points
     private final Pokemon user;
 
     /**

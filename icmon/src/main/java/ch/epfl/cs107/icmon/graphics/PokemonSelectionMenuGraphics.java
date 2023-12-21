@@ -46,7 +46,7 @@ public class PokemonSelectionMenuGraphics extends ICMonFightInteractionGraphics 
         this.background = new ImageGraphics(getBackground("selection_background"),scaleFactor, scaleFactor);
         selectors = new GraphicsEntity[3];
         header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 2f),
-                new TextGraphics("Please, select a pokemon  [ < ]  [ > ]", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+                new TextGraphics("Please, select a Pokémon  [ < ]  [ > ]", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
         this.currentChoice = 0;
     }
 
