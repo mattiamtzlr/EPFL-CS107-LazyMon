@@ -58,10 +58,20 @@ public class ICMon extends AreaGame {
      * Registers Pokémon which need to be used at some point in the Pokédex.
      */
     private void createPokemon() {
-        this.pokedex.put("bulbasaur", new Bulbasaur(getCurrentArea(), new DiscreteCoordinates(0,0)));
-        this.pokedex.put("latios", new Latios(getCurrentArea(), new DiscreteCoordinates(0,0)));
-        this.pokedex.put("nidoqueen", new Nidoqueen(getCurrentArea(), new DiscreteCoordinates(0,0)));
-        this.pokedex.put("voltball", new Voltball(getCurrentArea(), new DiscreteCoordinates(0, 0)));
+        Area currentArea = getCurrentArea();
+        this.pokedex.put("bulbasaur", new Bulbasaur(currentArea, new DiscreteCoordinates(0,0)));
+        this.pokedex.put("latios", new Latios(currentArea, new DiscreteCoordinates(0,0)));
+        this.pokedex.put("nidoqueen", new Nidoqueen(currentArea, new DiscreteCoordinates(0,0)));
+        this.pokedex.put("voltball", new Voltball(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("charizard", new Charizard(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("enton", new Enton(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("gengar", new Gengar(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("kadabra", new Kadabra(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("snorlax", new Snorlax(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("squirtle", new Squirtle(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("tentacruel", new Tentacruel(currentArea, new DiscreteCoordinates(0, 0)));
+        this.pokedex.put("pikachu", new Pikachu(currentArea, new DiscreteCoordinates(0, 0)));
+
     }
 
     /**
@@ -96,8 +106,6 @@ public class ICMon extends AreaGame {
             mailbox = null;
         }
 
-        // TODO: (idea) make a method which takes an action and a key and then perform that action
-        //       when pressing that key.
         if (keyboard.get(Keyboard.R).isPressed())
             this.begin(getWindow(), getFileSystem());
         if (keyboard.get(Keyboard.C).isPressed())
