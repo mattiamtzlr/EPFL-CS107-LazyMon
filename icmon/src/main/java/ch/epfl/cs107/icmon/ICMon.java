@@ -48,6 +48,7 @@ public class ICMon extends AreaGame {
      */
     private void createAreas() {
         registerArea(new Town());
+        registerArea(new Route102());
         registerArea(new Lab());
         registerArea(new Arena());
         registerArea(new House());
@@ -71,7 +72,6 @@ public class ICMon extends AreaGame {
         this.pokedex.put("squirtle", new Squirtle(currentArea, new DiscreteCoordinates(0, 0)));
         this.pokedex.put("tentacruel", new Tentacruel(currentArea, new DiscreteCoordinates(0, 0)));
         this.pokedex.put("pikachu", new Pikachu(currentArea, new DiscreteCoordinates(0, 0)));
-
     }
 
     /**
@@ -131,7 +131,9 @@ public class ICMon extends AreaGame {
             createAreas();
 
 
-            initArea("house");
+            initArea("route102");
+//            initArea("house");
+
             createPokemon();
             events();
             return true;

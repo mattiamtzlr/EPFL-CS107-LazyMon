@@ -53,6 +53,15 @@ public class Town extends ICMonArea {
                 this,
                 new DiscreteCoordinates(25, 20)
         ));
+        registerActor(new Door(
+            "route102",
+            new DiscreteCoordinates(1, 12),
+            this,
+            new DiscreteCoordinates(29, 13),
+            new DiscreteCoordinates(29, 14),
+            new DiscreteCoordinates(29, 15),
+            new DiscreteCoordinates(29, 16)
+        ));
         registerActor(new Pikachu(this, new DiscreteCoordinates(11, 3)));
     }
 

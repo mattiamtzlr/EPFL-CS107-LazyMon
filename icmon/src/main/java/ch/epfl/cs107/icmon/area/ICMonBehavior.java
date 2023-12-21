@@ -50,8 +50,8 @@ public class ICMonBehavior extends AreaBehavior {
         WATER(-16776961, AllowedWalkingType.SURF),
         GRASS(-16743680, AllowedWalkingType.FEET);
 
-        final int type;
-        final AllowedWalkingType walkingType;
+        private final int type;
+        private final AllowedWalkingType walkingType;
 
         ICMonCellType(int type, AllowedWalkingType walkingType) {
             this.type = type;

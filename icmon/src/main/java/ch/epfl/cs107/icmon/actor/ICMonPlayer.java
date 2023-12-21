@@ -32,7 +32,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private Dialog dialog;
     private boolean inDialog;
     private boolean surf;
-    private final static int ANIMATION_DURATION = 6; // Handout wants 8, but we go vroom, set to 2 for maximal vroomness
+    private final static int ANIMATION_DURATION = 6;
     private final ICMonPlayerInteractionHandler handler;
     private final ICMon.ICMonGameState state;
     private final ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
@@ -231,8 +231,16 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
                 switch (cell.getType().getWalkingType()) {
-                    default -> setCurrentAnimation(animationLand);
                     case SURF -> setCurrentAnimation(animationWater);
+                    case FEET -> {
+                        setCurrentAnimation(animationLand);
+                        if (cell.getType().equals(ICMonBehavior.ICMonCellType.GRASS)) {
+                            // TODO (Mattia): randomly start a Pokémon fight. As this gets called continuously, somehow check
+                            //      check if player has already been in that position.
+                            System.out.println("grass");
+                        }
+                    }
+                    case ALL -> setCurrentAnimation(animationLand);
                 }
 
             }
