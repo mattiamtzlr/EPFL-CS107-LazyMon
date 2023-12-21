@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LazyMon Behavior Colors</title>
+  <style>
+    body {
+      font-family: monospace;
+      font-size: 1.5em;
+      background-color: #272727;
+      color: white;
+    }
+
+    .color-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: .8em;
+    }
+    
+    .color-swatch {
+      width: 5em;
+      height:2em;
+      margin-right: 10px;
+      border: 1px solid #000;
+      border-radius: 7px;
+    }
+  </style>
+</head>
+<body>
+  <h1>LazyMon Behavior Colors</h1>
+  <div id="colors"></div>
+  <script>
+    function intToHexColor(integer) {
+      // Ensure integer is a 32-bit signed integer
+      integer = integer | 0;
+      
+      // Convert to unsigned if negative
+      if (integer < 0) {
+        integer = 0xFFFFFF + integer + 1;
+      }
+      
+      // Convert to hex and pad with zeros
+      let hexString = integer.toString(16).toUpperCase().padStart(6, '0');
+      
+      return '#' + hexString;
+    }
+    
+    function displayColors(colorData) {
+      const container = document.getElementById('colors');
+      
+      colorData.forEach(data => {
+        const { integer, name } = data;
+        const hexColor = intToHexColor(integer);
+        
+        const colorContainer = document.createElement('div');
+        colorContainer.classList.add('color-container');
+        
+        const colorSwatch = document.createElement('div');
+        colorSwatch.classList.add('color-swatch');
+        colorSwatch.style.backgroundColor = hexColor;
+        
+        const hexLabel = document.createElement('span');
+        hexLabel.textContent = hexColor;
+
+        const spacer = document.createElement('span');
+        spacer.textContent = "|";
+        spacer.style.margin = "0 1em"
+
+        const colorName = document.createElement('span');
+        colorName.textContent = name;
+        
+        colorContainer.appendChild(colorSwatch);
+        colorContainer.appendChild(hexLabel);
+        colorContainer.appendChild(spacer);
+        colorContainer.appendChild(colorName);
+        
+        container.appendChild(colorContainer);
+      });
+    }
+    
+    const colorData = [
+      {integer: 0, name: "NULL - NONE"},
+      {integer: -16777216, name: "WALL - NONE"},
+      {integer: -8750470, name: "BUILDING - NONE"},
+      {integer: -256, name: "INTERACT - NONE"},
+      {integer: -195580, name: "DOOR - ALL"},
+      {integer: -1, name: "INDOOR_WALKABLE - FEET"},
+      {integer: -14112955, name: "OUTDOOR_WALKABLE - FEET"},
+      {integer: -16776961, name: "WATER - SURF"},
+      {integer: -16743680, name: "GRASS - FEET"},
+    ];
+    displayColors(colorData);
+  </script>
+</body>
+</html>
