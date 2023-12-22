@@ -165,7 +165,7 @@ public class ICMon extends AreaGame {
                 new FirstInteractionWithProfessorOakEvent(eventManager, gameState),
                 collectItemEvent,
                 new FirstInteractionWithGarryEvent(eventManager, gameState),
-                new EndBossEvent(eventManager, gameState)
+                new SearchForPikachuEvent(eventManager, gameState)
                 );
         chain.start();
     }
