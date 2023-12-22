@@ -105,8 +105,10 @@ public class ICMon extends AreaGame {
             mailbox.process(gameState);
             mailbox = null;
         }
-
-        if (keyboard.get(Keyboard.R).isPressed())
+        // the second condition does not fully prevent softlocks, but since reset will only ever be used by devs,
+        // it is allowed to come with some risks :)
+        if (keyboard.get(Keyboard.R).isPressed() &&
+                activeEvents.get(activeEvents.size()-1) instanceof PokemonFightEvent)
             this.begin(getWindow(), getFileSystem());
         if (keyboard.get(Keyboard.C).isPressed())
             System.out.println(player.getCurrentCells());
