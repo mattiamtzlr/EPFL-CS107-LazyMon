@@ -10,6 +10,7 @@
     * [Implementation differences](#implementation-differences)
     * [Minor alterations from the énoncé](#minor-alterations-from-the-énoncé)
   * [Extensions](#extensions)
+  * [Remarks](#remarks)
 <!-- TOC -->
 
 ## Added classes / interfaces
@@ -47,16 +48,21 @@
   - Pikachu has a _Shock_ attack, which does a lot of damage, but leaves him weak, resulting in him not being able to fight the next round.
   - Charizard has a _Fire_ attack, which sets the target on fire (not visually, sadly), resulting int the target taking a bit of damage each following round.
   - Snorlax has a _Sleep_ "attack", during which he doesn't attack, but instead rests quickly and gains some HP back :)
+  - Enton, Tentacruel and Kadabra can use _Confuse_ attack, which deals reduced damage with a chance to confuse the enemy for one turn.
+  - Gengar has a _Shadow punch_ attack, which inflicts a lot of damage if the enemy has low hitpoints.
+  - Bulbasaur has a _Vine whip_ attack that additionally  deals half of the bulbasaurs damage properties during the next 3-5 rounds.
 - Fights are in general more developed:
   - The enemy Pokémon might escape the fight, if its health gets too low.
   - There are small pauses in between turns to improve the immersion.
 - Created classes for events inside the package "gamelogic/events" to fit our needs:
-  - EndBossEvent
+  - SearchForPikachuEvent
 - Created classes for actions inside the package "gamelogic/actions" to fit our needs:
   - GivePokemonAction
   - OpenDialogAction
 - Created classes for messages inside the package "gamelogic/messages" to fit our needs:
   - IndependentDialogMessage
+- We added a new area to the east of the town area, which can be accessed through the passage next to the sign.
+  - There, Pokémon can hide in tall grass and be caught.
 
 ## Remarks
 We decided not to write JavaDoc for trivial methods such as some getters and setters as well as for most

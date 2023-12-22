@@ -1,7 +1,7 @@
 # LazyMon
 
 by Mattia Metzler and Leoluca Bernardi, Group 42  
-Disclaimer: this game is not lazily made even though the name might suggest this. We are both fans of
+Disclaimer: this game is not lazily made even though the name might suggest this, sadly we also did not implement any form of lazy evaluation. We are simply both fans of
 software such as lazygit and lazyvim, which is why we chose that name :)
 
 ## Contents
@@ -21,15 +21,16 @@ Asserts are not necessary.
 
 ## Controls
 
-| Key(s)    | Function       | Conditions                                             |
-|-----------|----------------|--------------------------------------------------------|
-| W / UP    | Walk up        | not in dialog                                          |
-| A / LEFT  | Walk left      | not in dialog                                          |
-| S / DOWN  | Walk down      | not in dialog                                          |
-| D / RIGHT | Walk right     | not in dialog                                          |
-| F         | Interact       | standing in front of interactable (Person, ball, etc.) |
-| R         | Reset the game | -                                                      |
-| SPACE     | Advance dialog | in dialog                                              |
+| Key(s)    | Function                  | Conditions                                             |
+|-----------|---------------------------|--------------------------------------------------------|
+| W / UP    | Walk up                   | not in dialog                                          |
+| A / LEFT  | Walk left                 | not in dialog                                          |
+| S / DOWN  | Walk down                 | not in dialog                                          |
+| D / RIGHT | Walk right                | not in dialog                                          |
+| F         | Interact                  | standing in front of interactable (Person, ball, etc.) |
+| R         | Reset the game            | not during FightEvent                                  |
+| C         | Print current coordinates | -                                                      |
+| SPACE     | Advance dialog            | in dialog                                              |
 
 All other controls are explained in the UI.
 
@@ -44,4 +45,5 @@ The game-loop is as follows:
 3. In the lab, Professor Oak gives the player their first Pokémon.
 4. When going back to the Shop, the assistant will prompt the player to go fight Garry and to help her with finding her lost Pokémon.
 5. After having fought Garry, which should always be possible (unless Garry's Pokémon escapes) as the player's Pokémon is slightly stronger, the player receives the Voltball Pokémon of Garry. This allows him to cross water bodies now.
-6. Now the player can go look for the assistants Pokémon. If they find and defeat it or get defeated, that is the end of the game.
+6. As the Pokémon we are trying to fight is quite strong, the player should venture east to route 102 to catch stronger pokemon
+7. Now the player can go look for the assistants Pokémon. If they find and defeat it or get defeated, that is the end of the game.

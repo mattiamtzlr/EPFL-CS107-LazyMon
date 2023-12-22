@@ -159,6 +159,8 @@ public class ICMonFight extends PauseMenu {
             case ACTION_EXECUTION_CONTINUED -> {
                 if (player.properties().isOnFire())
                     player.sufferDamage(2);
+                if (player.properties().isThorned())
+                    player.sufferDamage(foe.properties().damage()/2);
 
                 boolean actionSuccess = this.currentState.action.doAction(foe);
                 if (!actionSuccess) {
@@ -185,7 +187,7 @@ public class ICMonFight extends PauseMenu {
                     if (foe.properties().isOnFire())
                         foe.sufferDamage(2);
                     if (foe.properties().isThorned())
-                        foe.sufferDamage((int)(2/3 * (double) player.properties().damage()));
+                        foe.sufferDamage(player.properties().damage()/2);
 
                     ICMonFightAction nextAction = null;
                     // if escapeProbability is great enough and in one out of 4 times the foe will flee.
