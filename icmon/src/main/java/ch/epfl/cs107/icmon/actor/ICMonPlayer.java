@@ -37,7 +37,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final ICMonPlayerInteractionHandler handler;
     private final ICMon.ICMonGameState state;
     private final ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
-    private static long lastWildPokmonInteraction = 0;
+    private long lastWildPokmonInteraction = 0;
     private static final Random random = new Random();
 
     /**
@@ -62,14 +62,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
 //        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Tentacruel(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Tentacruel(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));
-        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
+//        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Squirtle(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Snorlax(getOwnerArea(), getCurrentMainCellCoordinates()));
 
@@ -122,6 +122,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      */
     public boolean hasPokemon(){
         return !pokemonCollection.isEmpty();
+    }
+
+    public void resetCounter() {
+        this.lastWildPokmonInteraction = System.currentTimeMillis();
     }
 
     /**
@@ -244,7 +248,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                                     && (currentMillis - lastWildPokmonInteraction) > 7000   // wait at least 7 secs
                             ) {
                                 state.startWildPokemonFight();
-                                lastWildPokmonInteraction = System.currentTimeMillis();
                             }
                         }
                     }

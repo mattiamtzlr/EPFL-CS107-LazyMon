@@ -270,14 +270,27 @@ public class ICMon extends AreaGame {
             PokemonFightEvent fightEvent = new PokemonFightEvent(combat, eventManager);
             if (!wild)
                 fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
+
+            else if (foe instanceof Pokemon) {
+                fightEvent.onComplete(new AfterWildFightAction(gameState, (Pokemon) foe));
+            }
             send(new SuspendWithEventMessage(fightEvent));
         }
 
+        /**
+         * Starts a fight with a wild Pokémon
+         */
         public void startWildPokemonFight() {
             Pokemon foe = (Pokemon) pokedex.values().toArray()[random.nextInt(pokedex.size())];
             foe.reset();
             startSelection(foe, true);
-            givePlayerPokemon(foe.properties().name());
+        }
+
+        /**
+         * resets the counter of the player, keeping track of wild fights.
+         */
+        public void resetPlayerCounter() {
+            player.resetCounter();
         }
 
         /**
