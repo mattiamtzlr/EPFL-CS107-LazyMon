@@ -23,6 +23,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private final String name;
     private boolean alive = true;
     private boolean onFire = false;
+    private int thornRounds = 0;
     private boolean tired = false;
     private int hp;
     private final int maxHp;
@@ -104,6 +105,9 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      */
     public void setOnFire() {
         this.onFire = true;
+    }
+    public void setThorned(int rounds){
+        this.thornRounds = rounds;
     }
 
     /**
@@ -191,6 +195,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
         public boolean isTired() {
             return Pokemon.this.tired;
+        }
+        public boolean isThorned() {
+            Pokemon.this.thornRounds -= 1;
+            return thornRounds >= 1;
         }
 
         /**

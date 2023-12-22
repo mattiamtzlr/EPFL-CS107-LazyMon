@@ -15,6 +15,6 @@ public class Enton extends Pokemon {
     public Enton(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "enton", 5, 120, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
-        this.addFightAction(new ConfuseAction());
+        this.addFightAction(new ConfuseAction(), 1);
     }
 }
