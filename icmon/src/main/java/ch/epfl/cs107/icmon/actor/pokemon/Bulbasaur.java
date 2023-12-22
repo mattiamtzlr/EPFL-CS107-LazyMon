@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor.pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.actions.AttackAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.actions.EscapeAction;
+import ch.epfl.cs107.icmon.gamelogic.fights.actions.VineAction;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
@@ -19,5 +20,6 @@ public class Bulbasaur extends Pokemon{
             new EscapeAction());
 
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
+        this.addFightAction(new VineAction(this.properties().damage()), 1);
     }
 }

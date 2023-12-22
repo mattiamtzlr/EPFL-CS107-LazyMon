@@ -5,19 +5,23 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
 import java.util.Random;
 
-public class ConfuseAction implements ICMonFightAction {
+public class VineAction implements ICMonFightAction {
     private Random random = new Random();
+    private final int damage;
+
+    public VineAction(int damage) {
+        this.damage = damage;
+    }
+
     @Override
     public String name() {
-        return "Confuse";
+        return "Vine Whip";
     }
 
     @Override
     public boolean doAction(Pokemon target) {
-        target.sufferDamage(8);
-        // will stun the targeted pokemon in 3/5 cases
-        if (random.nextInt(1,6) <= 3)
-            target.setTired(true);
+        target.sufferDamage(damage-2);
+        target.setThorned(random.nextInt(2, 6));
         return true;
     }
 }

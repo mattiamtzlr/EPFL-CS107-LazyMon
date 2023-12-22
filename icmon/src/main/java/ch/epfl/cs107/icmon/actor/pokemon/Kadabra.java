@@ -15,6 +15,6 @@ public class Kadabra extends Pokemon {
     public Kadabra(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "kadabra", 15, 110, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
-        this.addFightAction(new ConfuseAction());
+        this.addFightAction(new ConfuseAction(), 1);
     }
 }

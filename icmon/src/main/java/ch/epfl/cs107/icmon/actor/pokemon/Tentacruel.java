@@ -15,6 +15,6 @@ public class Tentacruel extends Pokemon {
     public Tentacruel(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "tentacruel", 8, 65, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()));
-        this.addFightAction(new ConfuseAction());
+        this.addFightAction(new ConfuseAction(), 1);
     }
 }
