@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.gamelogic.actions.GivePokemonAction;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
@@ -24,7 +25,11 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent implements ICMonI
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        state.openDialog(new Dialog("go_fight_garry"));
+        state.openDialog(new Dialog("meeting_garry_interaction_icshopassistant"));
+    }
+    @Override
+    public void interactWith(ProfOak oak, boolean isCellInteraction) {
+        state.openDialog(new Dialog("meeting_garry_interaction_oak"));
     }
 
     @Override

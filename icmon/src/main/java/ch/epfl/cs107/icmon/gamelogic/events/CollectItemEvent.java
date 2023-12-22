@@ -3,7 +3,9 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
+import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
@@ -30,6 +32,14 @@ public class CollectItemEvent extends ICMonEvent implements ICMonInteractionVisi
         this.state.openDialog(new Dialog("collect_item_event_interaction_with_icshopassistant"));
     }
 
+    @Override
+    public void interactWith(ProfOak oak, boolean isCellInteraction) {
+        this.state.openDialog(new Dialog("collect_item_event_interaction_with_oak"));
+    }
+    @Override
+    public void interactWith(Garry garry, boolean isCellInteraction) {
+        this.state.openDialog(new Dialog("collect_item_event_interaction_with_garry"));
+    }
     @Override
     public void update(float deltaTime) {
         if (item.isCollected()) {
