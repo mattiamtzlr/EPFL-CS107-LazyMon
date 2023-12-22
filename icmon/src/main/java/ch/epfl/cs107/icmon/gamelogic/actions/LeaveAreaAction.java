@@ -23,7 +23,6 @@ public class LeaveAreaAction implements Action {
             ((Garry) actor).setDefeated(true);
         } else if (actor instanceof Pokemon) {
             actor.leaveArea();
-
         }
     }
 }

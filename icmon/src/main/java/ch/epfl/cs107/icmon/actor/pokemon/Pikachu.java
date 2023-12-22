@@ -13,7 +13,7 @@ public class Pikachu extends Pokemon{
      * @param position Position at which this Pikachu lives. (DiscreteCoordinates)
      */
     public Pikachu(Area ownerArea, DiscreteCoordinates position) {
-        super(ownerArea, position, "pikachu", 9, 70,
+        super(ownerArea, position, "pikachu", 9, 80,
                 new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
         this.addFightAction(new ShockAction(this), 1);

@@ -104,9 +104,6 @@ public class ICMonFight extends PauseMenu {
             }
 
             case ACTION_SELECTION -> {
-                if (player.properties().isOnFire())
-                    player.sufferDamage(2);
-
                 if (player.properties().isTired()) {
                     this.arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR,
                         String.format("%s is too tired to fight this round!", player.properties().name())));
@@ -160,6 +157,9 @@ public class ICMonFight extends PauseMenu {
             }
 
             case ACTION_EXECUTION_CONTINUED -> {
+                if (player.properties().isOnFire())
+                    player.sufferDamage(2);
+
                 boolean actionSuccess = this.currentState.action.doAction(foe);
                 if (!actionSuccess) {
                     this.currentState = ICMonFightState.DRAW_LAST_FRAME;

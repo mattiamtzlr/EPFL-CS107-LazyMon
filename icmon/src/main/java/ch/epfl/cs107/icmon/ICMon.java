@@ -27,6 +27,7 @@ import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Behold: the main game!
@@ -42,6 +43,7 @@ public class ICMon extends AreaGame {
     private ArrayList<ICMonEvent> completedEvents;
     private final HashMap<String, ICMonArea> areas = new HashMap<>();
     private GamePlayMessage mailbox;
+    private static final Random random = new Random();
 
     /**
      * Helper method to list all the areas which need to be created.
@@ -210,7 +212,9 @@ public class ICMon extends AreaGame {
          */
         public void givePlayerPokemon(String pokemonName) {
             openDialog(new Dialog("received_new_pokemon"));
-            player.addPokemon(pokedex.get(pokemonName));
+            Pokemon pokemon = pokedex.get(pokemonName);
+            pokemon.reset();
+            player.addPokemon(pokemon);
         }
 
         /**
@@ -245,9 +249,12 @@ public class ICMon extends AreaGame {
          * @param foe The current opponent. (ICMonFightableActor)
          */
         public void startSelection(ICMonFightableActor foe) {
+            startSelection(foe, false);
+        }
+        public void startSelection(ICMonFightableActor foe, boolean wild) {
              PokemonSelectionMenu selectionMenu = new PokemonSelectionMenu(player.getPokemons(), getCurrentArea().getKeyboard());
              PokemonSelectionEvent selectionEvent =
-                     new PokemonSelectionEvent(gameState, foe, selectionMenu,  eventManager);
+                     new PokemonSelectionEvent(gameState, foe, selectionMenu,  eventManager, wild);
              send(new SuspendWithEventMessage(selectionEvent));
         }
 
@@ -256,7 +263,7 @@ public class ICMon extends AreaGame {
          * @param choice The index of the chosen Pokémon in the player's collection. (int)
          * @param foe The current opponent. (ICMonFightableActor)
          */
-        public void startFightEvent(int choice, ICMonFightableActor foe){
+        public void startFightEvent(int choice, ICMonFightableActor foe, boolean wild){
              ICMonFight combat;
              if (foe instanceof Garry)
                  combat = new ICMonFight(player.getPokemons().get(choice), ((Garry) foe).getPokemon());
@@ -264,8 +271,16 @@ public class ICMon extends AreaGame {
                  combat = new ICMonFight(player.getPokemons().get(choice), (Pokemon) foe);
 
             PokemonFightEvent fightEvent = new PokemonFightEvent(combat, eventManager);
-            fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
+            if (!wild)
+                fightEvent.onComplete(new LeaveAreaAction((ICMonActor) foe));
             send(new SuspendWithEventMessage(fightEvent));
+        }
+
+        public void startWildPokemonFight() {
+            Pokemon foe = (Pokemon) pokedex.values().toArray()[random.nextInt(pokedex.size())];
+            foe.reset();
+            startSelection(foe, true);
+            givePlayerPokemon(foe.properties().name());
         }
 
         /**

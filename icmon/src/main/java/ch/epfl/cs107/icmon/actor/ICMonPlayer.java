@@ -21,6 +21,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The main character of the game.
@@ -36,6 +37,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final ICMonPlayerInteractionHandler handler;
     private final ICMon.ICMonGameState state;
     private final ArrayList<Pokemon> pokemonCollection = new ArrayList<>();
+    private static long lastWildPokmonInteraction = 0;
+    private static final Random random = new Random();
 
     /**
      * The constructor for the player, the main character. Two animations are initialised, one for movement on land and one
@@ -59,14 +62,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
 //        addPokemon(new Bulbasaur(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Nidoqueen(getOwnerArea(), getCurrentMainCellCoordinates()));
-//        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Pikachu(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Latios(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Voltball(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Gengar(getOwnerArea(), getCurrentMainCellCoordinates()));
-//        addPokemon(new Tentacruel(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Tentacruel(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Enton(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Kadabra(getOwnerArea(), getCurrentMainCellCoordinates()));
-//        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
+        addPokemon(new Charizard(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Squirtle(getOwnerArea(), getCurrentMainCellCoordinates()));
 //        addPokemon(new Snorlax(getOwnerArea(), getCurrentMainCellCoordinates()));
 
@@ -235,9 +238,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     case FEET -> {
                         setCurrentAnimation(animationLand);
                         if (cell.getType().equals(ICMonBehavior.ICMonCellType.GRASS)) {
-                            // TODO (Mattia): randomly start a Pokémon fight. As this gets called continuously, somehow check
-                            //      check if player has already been in that position.
-                            System.out.println("grass");
+                            long currentMillis = System.currentTimeMillis();
+                            if (
+                                random.nextInt(15) < 1  // one in 15 chance
+                                    && (currentMillis - lastWildPokmonInteraction) > 7000   // wait at least 7 secs
+                            ) {
+                                state.startWildPokemonFight();
+                                lastWildPokmonInteraction = System.currentTimeMillis();
+                            }
                         }
                     }
                     case ALL -> setCurrentAnimation(animationLand);
@@ -256,8 +264,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if (isCellInteraction) {
-                PassDoorMessage message = new PassDoorMessage(door);
-                state.send(message);
+                if (!(door.getDestinationArea().equals("route102") && pokemonCollection.isEmpty())) {
+                    PassDoorMessage message = new PassDoorMessage(door);
+                    state.send(message);
+                } else if (!isDisplacementOccurs()) {
+                    openDialog(new Dialog("cannot_enter_route102"));
+                    orientate(getOrientation().opposite());
+                    move(ANIMATION_DURATION);
+                }
             }
         }
 

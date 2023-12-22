@@ -11,6 +11,7 @@ public class PokemonSelectionEvent extends ICMonEvent implements ICMonInteractio
     private final PokemonSelectionMenu selectionMenu;
     private final ICMon.ICMonGameState state;
     private final ICMonFightableActor foe;
+    private final boolean wild; // keeps track if it is a wild encounter
 
     /**
      * This event invokes a Pokémon selection menu, which allows to choose a Pokémon before a fight.
@@ -21,18 +22,19 @@ public class PokemonSelectionEvent extends ICMonEvent implements ICMonInteractio
      */
     public PokemonSelectionEvent(ICMon.ICMonGameState state, ICMonFightableActor foe,
                                  PokemonSelectionMenu selectionMenu,
-                                 ICMon.ICMonEventManager eventManager) {
+                                 ICMon.ICMonEventManager eventManager, boolean wild) {
         super(eventManager);
         this.selectionMenu = selectionMenu;
         this.state = state;
         this.foe = foe;
+        this.wild = wild;
     }
 
     @Override
     public void update(float deltaTime) {
         if (this.selectionMenu.choice() >= 0) {
             int choice = selectionMenu.choice();
-            onComplete(new AfterPokemonSelectionFightAction(state, choice, foe));
+            onComplete(new AfterPokemonSelectionFightAction(state, choice, foe, wild));
             complete();
         }
     }
