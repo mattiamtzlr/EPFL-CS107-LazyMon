@@ -184,6 +184,8 @@ public class ICMonFight extends PauseMenu {
                 } else {
                     if (foe.properties().isOnFire())
                         foe.sufferDamage(2);
+                    if (foe.properties().isThorned())
+                        foe.sufferDamage((int)(2/3 * (double) player.properties().damage()));
 
                     ICMonFightAction nextAction = null;
                     // if escapeProbability is great enough and in one out of 4 times the foe will flee.
