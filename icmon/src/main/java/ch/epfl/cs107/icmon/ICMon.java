@@ -107,6 +107,7 @@ public class ICMon extends AreaGame {
             mailbox.process(gameState);
             mailbox = null;
         }
+
         // the second condition does not fully prevent softlocks, but since reset will only ever be used by devs,
         // it is allowed to come with some risks :)
         if (keyboard.get(Keyboard.R).isPressed() &&
@@ -114,6 +115,16 @@ public class ICMon extends AreaGame {
             this.begin(getWindow(), getFileSystem());
         if (keyboard.get(Keyboard.C).isPressed())
             System.out.println(player.getCurrentCells());
+        if (keyboard.get(Keyboard.E).isPressed()) {
+            if (player.getPokemons().isEmpty())
+                System.out.println("Player currently does not have any Pokémon");
+            else {
+                System.out.println("Player's Pokémon collection:");
+                for (Pokemon pokemon : player.getPokemons()) {
+                    System.out.println(pokemon.properties().name());
+                }
+            }
+        }
     }
 
     /**

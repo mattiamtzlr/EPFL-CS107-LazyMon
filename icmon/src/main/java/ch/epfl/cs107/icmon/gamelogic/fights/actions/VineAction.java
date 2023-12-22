@@ -6,7 +6,7 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import java.util.Random;
 
 public class VineAction implements ICMonFightAction {
-    private Random random = new Random();
+    private final Random random = new Random();
     private final int damage;
 
     public VineAction(int damage) {
