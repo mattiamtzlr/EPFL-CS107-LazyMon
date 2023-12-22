@@ -22,8 +22,7 @@ public class Route102 extends ICMonArea {
             this,
             new DiscreteCoordinates(0, 10),
             new DiscreteCoordinates(0, 11),
-            new DiscreteCoordinates(0, 12),
-            new DiscreteCoordinates(0, 13)
+            new DiscreteCoordinates(0, 12)
         ));
     }
 

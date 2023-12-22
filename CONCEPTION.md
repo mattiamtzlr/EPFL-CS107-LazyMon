@@ -37,7 +37,7 @@
   - Voltball
   - Enton
   - Gengar
-  - Enton
+  - Kadabra
   - Pikachu
   - Tentacruel
   - Charizard
