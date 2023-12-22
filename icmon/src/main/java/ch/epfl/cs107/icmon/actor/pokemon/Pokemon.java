@@ -53,6 +53,15 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     }
 
     /**
+     * Resets all attributes of the Pokémon
+     */
+    public void reset() {
+        this.onFire = false;
+        this.tired = false;
+        this.hp = this.maxHp;
+    }
+
+    /**
      * Method to add a fight action to a Pokémon, which is needed to add actions, which take properties of the Pokémon as
      * parameters (like its damage), as these are only available after construction.
      * @param fightAction The action to be added. (ICMonFightAction)
@@ -106,6 +115,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public void setOnFire() {
         this.onFire = true;
     }
+
     public void setThorned(int rounds){
         this.thornRounds = rounds;
     }

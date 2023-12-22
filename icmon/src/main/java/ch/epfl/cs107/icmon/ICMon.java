@@ -133,10 +133,7 @@ public class ICMon extends AreaGame {
             this.eventManager = new ICMonEventManager();
 
             createAreas();
-
-
-            initArea("route102");
-//            initArea("house");
+            initArea("house");
 
             createPokemon();
             events();
