@@ -14,5 +14,6 @@ public class Gengar extends Pokemon {
     public Gengar(Area ownerArea, DiscreteCoordinates position) {
         super(ownerArea, position, "gengar", 12, 55, new EscapeAction());
         this.addFightAction(new AttackAction(this.properties().damage()), 0);
+        this.addFightAction(new ShadowAction(this.properties().damage()));
     }
 }
